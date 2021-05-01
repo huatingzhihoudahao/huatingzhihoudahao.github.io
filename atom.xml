@@ -3,11 +3,11 @@
   <title>乔鲁诺正牌女友</title>
   
   
-  <link href="https://huatingzhihoudahao.github.io/blog/atom.xml" rel="self"/>
+  <link href="https://huatingzhihoudahao.github.io/atom.xml" rel="self"/>
   
-  <link href="https://huatingzhihoudahao.github.io/blog/"/>
+  <link href="https://huatingzhihoudahao.github.io/"/>
   <updated>2021-05-01T09:01:14.444Z</updated>
-  <id>https://huatingzhihoudahao.github.io/blog/</id>
+  <id>https://huatingzhihoudahao.github.io/</id>
   
   <author>
     <name>做秧歌star的女人</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>第一支博客的bug们</title>
-    <link href="https://huatingzhihoudahao.github.io/blog/2021/04/30/bug%20in%20first%20blog/"/>
-    <id>https://huatingzhihoudahao.github.io/blog/2021/04/30/bug%20in%20first%20blog/</id>
+    <link href="https://huatingzhihoudahao.github.io/2021/04/30/bug%20in%20first%20blog/"/>
+    <id>https://huatingzhihoudahao.github.io/2021/04/30/bug%20in%20first%20blog/</id>
     <published>2021-04-30T15:34:15.420Z</published>
     <updated>2021-05-01T09:01:14.444Z</updated>
     
@@ -33,17 +33,17 @@
     
     
     
-    <category term="hexo" scheme="https://huatingzhihoudahao.github.io/blog/categories/hexo/"/>
+    <category term="hexo" scheme="https://huatingzhihoudahao.github.io/categories/hexo/"/>
     
     
-    <category term="-hexo搭建中的bug" scheme="https://huatingzhihoudahao.github.io/blog/tags/hexo%E6%90%AD%E5%BB%BA%E4%B8%AD%E7%9A%84bug/"/>
+    <category term="-hexo搭建中的bug" scheme="https://huatingzhihoudahao.github.io/tags/hexo%E6%90%AD%E5%BB%BA%E4%B8%AD%E7%9A%84bug/"/>
     
   </entry>
   
   <entry>
     <title>hexo</title>
-    <link href="https://huatingzhihoudahao.github.io/blog/2021/04/30/hello-world/"/>
-    <id>https://huatingzhihoudahao.github.io/blog/2021/04/30/hello-world/</id>
+    <link href="https://huatingzhihoudahao.github.io/2021/04/30/hello-world/"/>
+    <id>https://huatingzhihoudahao.github.io/2021/04/30/hello-world/</id>
     <published>2021-04-30T12:51:00.746Z</published>
     <updated>2021-05-01T08:27:38.762Z</updated>
     
@@ -57,10 +57,10 @@
     
     
     
-    <category term="hexo" scheme="https://huatingzhihoudahao.github.io/blog/categories/hexo/"/>
+    <category term="hexo" scheme="https://huatingzhihoudahao.github.io/categories/hexo/"/>
     
     
-    <category term="-hexo指令" scheme="https://huatingzhihoudahao.github.io/blog/tags/hexo%E6%8C%87%E4%BB%A4/"/>
+    <category term="-hexo指令" scheme="https://huatingzhihoudahao.github.io/tags/hexo%E6%8C%87%E4%BB%A4/"/>
     
   </entry>
   
