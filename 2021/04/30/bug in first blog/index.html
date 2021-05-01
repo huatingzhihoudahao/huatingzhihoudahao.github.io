@@ -54,6 +54,10 @@ http://www.123.com/index.html 调用 https://www.123.com/server.php （协议不
 原文链接：https://blog.csdn.net/ouxiaoxian/article/details/89332027
 </code></pre>
 <p>这个我已经不管了。。。就这样吧懒得改了。。反正看不出有问题。。</p>
+<p>现在的我是从第六个问题来的！！解决了！！</p>
+<pre><code> background-image: url(https://huatingzhihoudahao.github.io/blog/img/backgroud.png);
+</code></pre>
+<p>我实在是太蠢了。。。。。</p>
 <h2 id="6-上传网站主题的头像，主页面显示出来了，点进博客里面就显示不出来"><a href="#6-上传网站主题的头像，主页面显示出来了，点进博客里面就显示不出来" class="headerlink" title="6.上传网站主题的头像，主页面显示出来了，点进博客里面就显示不出来"></a>6.上传网站主题的头像，主页面显示出来了，点进博客里面就显示不出来</h2><p>同4，5理由，控制台锁定error，发现图片位置是</p>
 <pre><code>https://huatingzhihoudahao.github.io/blog/2021/04/30/hello-world/img/profile.jpg
 </code></pre>
@@ -91,6 +95,7 @@ style.css:1 跨源读取阻止(CORB)功能阻止了 MIME 类型为 text/html 的
 <p>但如果写img/profile.jpg，他就会默认把前面补上 当前页面的头 比如<a href="https://huatingzhihoudahao.github.io/blog/archives/img/profile.jpg">https://huatingzhihoudahao.github.io/blog/archives/img/profile.jpg</a>  补成这个样子（这个是我点击归档出来的路径）  是没有的 所以会显示不出来</p>
 <p>如果是主页面,会补成这个样子<a href="https://huatingzhihoudahao.github.io/blog/img/profile.jpg">https://huatingzhihoudahao.github.io/blog/img/profile.jpg</a>   ，是有的，所以可以显示。如果是归档啊 关于啊 之类的 可以自己在本地搭建hexo的地方（比如我是在myblog部署的git）找source，找about啊归档啊标签啊之类的（hexo new 出来的文件夹） ，在里面新建一个img文件夹把图片扔进去。上传之后 可以保证在io上点进归档是可以显示头像的。但是md文档的点进去出不了头像怎么解决还不知道。</p>
 <p>!!!我知道怎么解决这些问题了！！统统用<a href="https://huatingzhihoudahao.github.io/blog/img/profile.jpg%EF%BC%81%EF%BC%81">https://huatingzhihoudahao.github.io/blog/img/profile.jpg！！</a> 为什么我想绝对路径的时候只想到到github.com/balaba那个地方呢！直接io/balabala  不就行了！</p>
+<p>n！i！c！e！！！（虽然之前的我实在是太傻了。。。怎么就脑子没转过弯来）</p>
 <h2 id="7-根据主题作者提示安装npm-install-hexo-renderer-pug-–save的问题"><a href="#7-根据主题作者提示安装npm-install-hexo-renderer-pug-–save的问题" class="headerlink" title="7.根据主题作者提示安装npm install hexo-renderer-pug –save的问题"></a>7.根据主题作者提示安装npm install hexo-renderer-pug –save的问题</h2><h4 id="7-1出现18-packages-are-looking-for-funding-run-npm-fund-for-details"><a href="#7-1出现18-packages-are-looking-for-funding-run-npm-fund-for-details" class="headerlink" title="7.1出现18 packages are looking for funding   run npm fund for details"></a>7.1出现18 packages are looking for funding   run <code>npm fund</code> for details</h4><p>其实就是求打赏啦，可以run npm fund看链接点击去打赏，不想打赏就</p>
 <pre><code>npm install hexo-renderer-pug --save --no-fund
 </code></pre>
