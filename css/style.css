@@ -367,7 +367,11 @@ a, .m-nav a:hover, .l-post .p-desc a:hover, .ttl a:hover, .m-nav .dot, .l-pager 
   padding: 40px;
   margin-bottom: 20px;
   background: #263949;
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5); }
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden; }
 
 .l-post .p-desc:hover {
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.8); }
