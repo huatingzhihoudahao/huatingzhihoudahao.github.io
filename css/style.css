@@ -357,7 +357,7 @@ a, .m-nav a:hover, .l-post .p-desc a:hover, .ttl a:hover, .m-nav .dot, .l-pager 
 .l-post-art {
   padding-bottom: 0; }
 
-.l-post .p-desc, article.p-art {
+.p-desc {
   position: relative;
   top: 0;
   left: -80px;
@@ -372,6 +372,18 @@ a, .m-nav a:hover, .l-post .p-desc a:hover, .ttl a:hover, .m-nav .dot, .l-pager 
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden; }
+
+.l-post article.p-art {
+  position: relative;
+  top: 0;
+  left: -80px;
+  width: 100%;
+  max-width: 840px;
+  text-align: left;
+  padding: 40px;
+  margin-bottom: 20px;
+  background: #263949;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5); }
 
 .l-post .p-desc:hover {
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.8); }
