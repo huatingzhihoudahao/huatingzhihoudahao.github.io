@@ -433,7 +433,7 @@ a, .m-nav a:hover, .l-post .p-desc a:hover, .ttl a:hover, .m-nav .dot, .l-pager 
     margin-bottom: 0.2em; }
 
 .p-content h2, .p-content h3, .p-content h4 {
-  margin: 1.6em 0 0.6em; }
+  margin: 4.6em 0 0.6em; }
 
 .p-content p {
   margin: 1em 0; }
@@ -453,8 +453,8 @@ a, .m-nav a:hover, .l-post .p-desc a:hover, .ttl a:hover, .m-nav .dot, .l-pager 
   background: #213240; }
 
 .p-content pre {
-  margin-top: 50px !important;
-  margin-bottom: 50px !important; }
+  margin-top: 18px !important;
+  margin-bottom: 18px !important; }
   .p-content pre ol {
     overflow: auto; }
   .p-content pre ol li {
