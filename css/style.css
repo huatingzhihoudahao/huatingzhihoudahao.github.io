@@ -783,9 +783,6 @@ h1.p-title {
 blockquote a {
   color: #eada56; }
 
-.p-common a {
-  color: #eada56; }
-
 .p-content a {
   color: #eada56; }
 
@@ -797,3 +794,6 @@ span.toc-number, div.toc-title {
 
 span.toc-text {
   color: #cecece; }
+
+.p-common a {
+  color: #8B008B; }
