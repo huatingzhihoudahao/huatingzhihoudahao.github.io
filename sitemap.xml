@@ -67,13 +67,6 @@
 
   
   <url>
-    <loc>https://huatingzhihoudahao.github.io/blog/tags/hexo%E6%90%AD%E5%BB%BA%E4%B8%AD%E7%9A%84bug/</loc>
-    <lastmod>2021-05-02</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://huatingzhihoudahao.github.io/blog/tags/hexo%E6%8C%87%E4%BB%A4/</loc>
     <lastmod>2021-05-02</lastmod>
     <changefreq>daily</changefreq>
@@ -110,6 +103,13 @@
   
   <url>
     <loc>https://huatingzhihoudahao.github.io/blog/tags/GPIO/</loc>
+    <lastmod>2021-05-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://huatingzhihoudahao.github.io/blog/tags/hexo%E6%90%AD%E5%BB%BA%E4%B8%AD%E7%9A%84bug/</loc>
     <lastmod>2021-05-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
