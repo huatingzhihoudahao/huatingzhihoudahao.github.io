@@ -22,6 +22,9 @@ body, .l-content {
 blockquote {
   background-color: #2d4356; }
 
+.p-content {
+  color: #0d090a; }
+
 body, button, textarea, input, select, .m-hdimg .ttl a, .m-nav a, .l-pager a, .p-content, .l-post .p-desc a {
   color: #CECECE; }
 
@@ -69,19 +72,19 @@ blockquote {
     padding-bottom: 1em; }
 
 h1 {
-  font-size: 30px;
+  font-size: 20px;
   line-height: 1.2;
   margin: 0 0 36px; }
 
 h2 {
-  font-size: 1.5em;
+  font-size: 15px;
   line-height: 1.6; }
 
 h3 {
-  font-size: 1.3em; }
+  font-size: 15px; }
 
 h4 {
-  font-size: 1em; }
+  font-size: 10px; }
 
 .box {
   zoom: 1; }
@@ -369,7 +372,7 @@ a, .m-nav a:hover, .l-post .p-desc a:hover, .ttl a:hover, .m-nav .dot, .l-pager 
   background: #263949;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
   display: -webkit-box;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden; }
 
@@ -400,8 +403,8 @@ a, .m-nav a:hover, .l-post .p-desc a:hover, .ttl a:hover, .m-nav .dot, .l-pager 
   height: 0; }
 
 .p-content {
-  font-size: 15px;
-  margin: 1em 0; }
+  font-size: 10px;
+  margin: .5em 0; }
 
 .p-readmore {
   text-align: right; }
