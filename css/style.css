@@ -130,12 +130,12 @@ ul.search-result-list em {
 /*mobile head nav style */
 /*----------------------*/
 .mobile-head {
-  display: none;
-  position: fixed;
+  display: block;
+  position: inherit;
   width: 100%;
   height: 48px;
   background: #2d4356;
-  box-shadow: 0 0 10px 1px #2d4356;
+  box-shadow: 0 0 10px 1px #0e0a0b;
   text-align: center;
   z-index: 999; }
   .mobile-head .navbar-title {
@@ -144,7 +144,7 @@ ul.search-result-list em {
     .mobile-head .navbar-title a {
       font-size: 1.6em;
       letter-spacing: 0.2rem;
-      color: #CECECE;
+      color: #481550;
       line-height: 48px; }
   .mobile-head .navbar-icon {
     color: #CECECE;
