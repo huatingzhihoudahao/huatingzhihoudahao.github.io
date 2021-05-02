@@ -70,7 +70,7 @@ blockquote {
   -webkit-box-sizing: border-box;
   margin: 24px -40px;
   padding: 0.5em 40px 0.5em 32px;
-  border-left: 8px solid #b9549d; }
+  border-left: 8px solid #eada56; }
 
 blockquote ol, blockquote ul {
   padding-bottom: 1em; }
@@ -153,7 +153,7 @@ ul.search-result-list em {
 .mobile-head .navbar-title a {
   font-size: 1.6em;
   letter-spacing: 0.2rem;
-  color: #b9549d;
+  color: #8B008B;
   line-height: 48px; }
 
 .mobile-head .navbar-icon {
@@ -292,10 +292,10 @@ ul.search-result-list em {
   font-weight: normal; }
 
 .l-post .p-desc a:hover, .ttl a:hover, .m-nav .dot, .l-pager .current, footer a:hover, .p-info a:hover {
-  color: #b9549d; }
+  color: #eada56; }
 
 .m-hdimg img, .m-desc, .l-pager .current, .l-pager-dtl a, .m-sch .txt {
-  border-color: #b9549d; }
+  border-color: #eada56; }
 
 .m-hdimg .ttl {
   font-size: 16px;
@@ -305,7 +305,7 @@ ul.search-result-list em {
   padding: 0 65px 0 45px; }
 
 .m-hdimg img {
-  border: 2px solid #b9549d;
+  border: 2px solid #eada56;
   padding: 5px;
   width: 128px;
   height: 128px;
@@ -323,7 +323,7 @@ ul.search-result-list em {
 .m-desc {
   background: #1f3140;
   background: rgba(0, 0, 0, 0.15);
-  border-left: 2px solid #b9549d;
+  border-left: 2px solid #eada56;
   padding: 20px 65px 20px 43px; }
 
 .m-nav ul {
@@ -351,7 +351,7 @@ ul.search-result-list em {
   height: 20px;
   line-height: 20px;
   padding: 0 0 4px;
-  border: 1px solid #b9549d;
+  border: 1px solid #eada56;
   border-width: 0 0 1px;
   background: 0; }
 
@@ -455,7 +455,7 @@ ul.search-result-list em {
   float: left;
   padding: 2px;
   margin-bottom: 16px;
-  border-bottom: 2px solid #b9549d;
+  border-bottom: 2px solid #eada56;
   font-size: 16px; }
 
 .l-pager-dtl .next {
@@ -627,7 +627,7 @@ footer {
   content: '';
   position: absolute;
   display: block;
-  background: #7166F7;
+  background: #eada56;
   opacity: 0.4; }
 
 .p-archive h2:hover:before, .p-archive li:hover:before {
@@ -781,13 +781,19 @@ h1.p-title {
   color: #cecece; }
 
 blockquote a {
-  color: #b9549d; }
+  color: #eada56; }
 
 .p-common a {
-  color: #b9549d; }
+  color: #eada56; }
 
 .p-content a {
-  color: #b9549d; }
+  color: #eada56; }
 
 .l-post .p-desc a {
-  color: #b9549d; }
+  color: #cecece; }
+
+span.toc-number, div.toc-title {
+  color: #eada56; }
+
+span.toc-text {
+  color: #cecece; }
