@@ -13,7 +13,7 @@ body {
   background-repeat: repeat-y;
   background-position-x: -80px;
   word-wrap: break-word;
-  font: 12px/200% "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", tahoma, arial, simsun, "宋体";
+  font: 12px/200% "PmingLiu", "FangSong", "微软雅黑", tahoma, arial, simsun, "宋体";
   overflow-x: hidden; }
 
 body, .l-content {
