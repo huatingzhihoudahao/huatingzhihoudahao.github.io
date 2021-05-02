@@ -23,10 +23,13 @@ blockquote {
   background-color: #2d4356; }
 
 .p-content {
-  color: #0d090a; }
-
-body, button, textarea, input, select, .m-hdimg .ttl a, .m-nav a, .l-pager a, .p-content, .l-post .p-desc a {
   color: #CECECE; }
+
+body, button, textarea, input, select, .m-hdimg .ttl a, .m-nav a, .l-pager a {
+  color: #CECECE; }
+
+.l-post .p-desc p {
+  color: #8B008B; }
 
 button, textarea, input, select {
   font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", tahoma, arial, simsun, "宋体";
@@ -274,10 +277,10 @@ ul.search-result-list em {
 .ttl a {
   font-weight: normal; }
 
-a, .m-nav a:hover, .l-post .p-desc a:hover, .ttl a:hover, .m-nav .dot, .l-pager a:hover, .l-pager .current, footer a:hover, .p-info a:hover {
+a, .m-nav a:hover, .l-post .p-desc a:hover, .ttl a:hover, .m-nav .dot, .l-pager .current, footer a:hover, .p-info a:hover {
   color: #0F9FB4; }
 
-.m-hdimg img, .m-desc, .l-pager a:hover, .l-pager .current, .l-pager-dtl a, .m-sch .txt {
+.m-hdimg img, .m-desc, .l-pager .current, .l-pager-dtl a, .m-sch .txt {
   border-color: #0F9FB4; }
 
 .m-hdimg .ttl {
