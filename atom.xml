@@ -6,7 +6,7 @@
   <link href="https://huatingzhihoudahao.github.io/atom.xml" rel="self"/>
   
   <link href="https://huatingzhihoudahao.github.io/"/>
-  <updated>2021-05-02T12:08:47.129Z</updated>
+  <updated>2021-05-02T12:11:03.496Z</updated>
   <id>https://huatingzhihoudahao.github.io/</id>
   
   <author>
@@ -21,14 +21,15 @@
     <link href="https://huatingzhihoudahao.github.io/2021/05/02/msp430g2%E4%B9%8B%E7%82%B9%E4%BA%AE%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%B0%8F%E7%81%AF/"/>
     <id>https://huatingzhihoudahao.github.io/2021/05/02/msp430g2%E4%B9%8B%E7%82%B9%E4%BA%AE%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%B0%8F%E7%81%AF/</id>
     <published>2021-05-02T12:04:45.000Z</published>
-    <updated>2021-05-02T12:08:47.129Z</updated>
+    <updated>2021-05-02T12:11:03.496Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="板载资源"><a href="#板载资源" class="headerlink" title="板载资源"></a>板载资源</h3><p><img src="/blog/2021/05/02/msp430g2%E4%B9%8B%E7%82%B9%E4%BA%AE%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%B0%8F%E7%81%AF//LaunchPadMSP430G2553.jpg" alt="G2"></p><p>本次开发用云端ccs开发，结合launchpad指导手册（教程）和g2用户手册（看寄存器）食用</p><h4 id="先从点亮一个led灯开始吧。。。"><a href="#先从点亮一个led灯开始吧。。。" class="headerlink" title="先从点亮一个led灯开始吧。。。"></a>先从点亮一个led灯开始吧。。。</h4><p>读写IO都需要设置PxDIR 高电平输出低电平输入</p><p>CPU读IO，实际上是读PxIN寄存器。</p><p>CPU写IO，实际是写PxOUT寄存器。</p><p>g2寄存器一般是八位，平时要么用十六进制表示八位  0x01  每位自己设</p><p>要么用P1DIR |= BIT0;   BIT0是00000001，|=是按位或，有1则1，这些的话最后一位会被置1 其他不变</p><pre><code class="C">#include &lt;msp430.h&gt;int main(void)&#123;    volatile unsigned int i;                  //volatile是一个特征修饰符（type specifier）.volatile的作用是作为指令关键字，确保本条指令不会因编译器的优化而省略，且要求每次直接读值。    WDTCTL = WDTPW + WDTHOLD;                 // Stop watchdog timer    P1DIR |= 0x01;                            // Set P1.0 to output direction  看引脚图可以看到是1_0是红灯    while(1)    &#123;        P1OUT ^= 0x01;                        // Toggle P1.0 using exclusive-OR     和00000001异或      //  P1OUT =~P1OUT;   //位操作取反        for (i=10000; i&gt;0; i--);  &#125;&#125;</code></pre>]]></content>
+    <content type="html"><![CDATA[<h2 id="板载资源"><a href="#板载资源" class="headerlink" title="板载资源"></a>板载资源</h2><p>本次开发用云端ccs开发，结合launchpad指导手册（教程）和g2用户手册（看寄存器）食用</p><p><img src="/blog/2021/05/02/msp430g2%E4%B9%8B%E7%82%B9%E4%BA%AE%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%B0%8F%E7%81%AF//LaunchPadMSP430G2553.jpg" alt="G2"></p><h4 id="先从点亮一个led灯开始吧。。。"><a href="#先从点亮一个led灯开始吧。。。" class="headerlink" title="先从点亮一个led灯开始吧。。。"></a>先从点亮一个led灯开始吧。。。</h4><p>读写IO都需要设置PxDIR 高电平输出低电平输入</p><p>CPU读IO，实际上是读PxIN寄存器。</p><p>CPU写IO，实际是写PxOUT寄存器。</p><p>g2寄存器一般是八位，平时要么用十六进制表示八位  0x01  每位自己设</p><p>要么用P1DIR |= BIT0;   BIT0是00000001，|=是按位或，有1则1，这些的话最后一位会被置1 其他不变</p><pre><code class="C">#include &lt;msp430.h&gt;int main(void)&#123;    volatile unsigned int i;                  //volatile是一个特征修饰符（type specifier）.volatile的作用是作为指令关键字，确保本条指令不会因编译器的优化而省略，且要求每次直接读值。    WDTCTL = WDTPW + WDTHOLD;                 // Stop watchdog timer    P1DIR |= 0x01;                            // Set P1.0 to output direction  看引脚图可以看到是1_0是红灯    while(1)    &#123;        P1OUT ^= 0x01;                        // Toggle P1.0 using exclusive-OR     和00000001异或      //  P1OUT =~P1OUT;   //位操作取反        for (i=10000; i&gt;0; i--);  &#125;&#125;</code></pre>]]></content>
     
     
       
       
-    <summary type="html">&lt;h3 id=&quot;板载资源&quot;&gt;&lt;a href=&quot;#板载资源&quot; class=&quot;headerlink&quot; title=&quot;板载资源&quot;&gt;&lt;/a&gt;板载资源&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;/blog/2021/05/02/msp430g2%E4%B9%8B%E7%82%B9%E4%BA%AE</summary>
+    <summary type="html">&lt;h2 id=&quot;板载资源&quot;&gt;&lt;a href=&quot;#板载资源&quot; class=&quot;headerlink&quot; title=&quot;板载资源&quot;&gt;&lt;/a&gt;板载资源&lt;/h2&gt;&lt;p&gt;本次开发用云端ccs开发，结合launchpad指导手册（教程）和g2用户手册（看寄存器）食用&lt;/p&gt;
+&lt;p&gt;&lt;img sr</summary>
       
     
     
