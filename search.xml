@@ -4,11 +4,40 @@
   
     
     <entry>
+      <title>大统一之用vscode开发单片机的platformio</title>
+      <link href="/blog/2021/05/04/%E5%A4%A7%E7%BB%9F%E4%B8%80%E4%B9%8B%E7%94%A8vscode%E5%BC%80%E5%8F%91%E5%8D%95%E7%89%87%E6%9C%BA%E7%9A%84platformio/"/>
+      <url>/blog/2021/05/04/%E5%A4%A7%E7%BB%9F%E4%B8%80%E4%B9%8B%E7%94%A8vscode%E5%BC%80%E5%8F%91%E5%8D%95%E7%89%87%E6%9C%BA%E7%9A%84platformio/</url>
+      
+        <content type="html"><![CDATA[<p>这个是vscode的插件，可以全员arduino，基本什么板子都有，统统封装成arduino的库。</p><p>vscode拓展安装platformio。安装完之后重启vscode，点外星人图标，点PIO home。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 嵌入式开发环境 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vscode </tag>
+            
+            <tag> platformio </tag>
+            
+            <tag> 全员arduino </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>energia开发环境</title>
       <link href="/blog/2021/05/04/energia%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/"/>
       <url>/blog/2021/05/04/energia%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
       
-        <content type="html"><![CDATA[<p><a href="https://energia.nu/download/">https://energia.nu/download/</a></p><p>点工具-&gt; 开发板管理器-&gt;下载想要的板子库  </p><p><img src="1.jpg" alt="image-20210504033843670"></p><p>它可以支持TI家基本所有的板子，而且不必读寄存器或者看库函数，直接arduino开发，除了没有断点以外以及只有TI家的库之外，没有什么别的可挑剔的了。</p>]]></content>
+        <content type="html"><![CDATA[<p>这回用的TIVAC，直接烧录是烧录不进去的，会发现设备根本没有配置好，需要手动安装驱动，驱动去TI官网找</p><p><a href="https://www.ti.com.cn/tool/cn/STELLARIS_ICDI_DRIVERS#supp-products-hw-dl">https://www.ti.com.cn/tool/cn/STELLARIS_ICDI_DRIVERS#supp-products-hw-dl</a></p><p>先去energia官网下个pinmap</p><p><img src="2.jpg" alt="image-20210504033843670"></p><p>这回主要是讲怎么energia开发</p><p>它可以支持TI家基本所有的板子，而且不必读寄存器或者看库函数，直接arduino开发，但是没有断点，以及库其实没有那么全备，很多都是一些冷门的外设的库，（或许不是冷门只是我孤陋寡闻？）</p><p>下载energia</p><p><a href="https://energia.nu/download/">https://energia.nu/download/</a></p><p>点工具-&gt; 开发板管理器-&gt;下载想要的板子  </p><p><img src="1.jpg" alt="image-20210504033843670"></p><p>然后工具-&gt;开发板-&gt;选中自己的板子</p><p>然后文件 示例 选自己想要的模板开始开发吧  右上角是串口显示，这里没法断点调试</p><p>效果</p><p><img src="3.jpg" alt="image-20210504033843670"></p><p>energia官网有函数。<a href="https://energia.nu/reference/">https://energia.nu/reference/</a>  基本等于arduino开发，就是得对着pinmap看引脚，有的时候为了库通用，给出来的不一定能用</p>]]></content>
       
       
       <categories>
@@ -64,7 +93,7 @@
       <link href="/blog/2021/05/03/%E4%BA%91%E7%AB%AFccs%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%98/"/>
       <url>/blog/2021/05/03/%E4%BA%91%E7%AB%AFccs%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%98/</url>
       
-        <content type="html"><![CDATA[<p>今天被云端ccs小小的坑了一下</p><p>云端ccs在建立工程的时候可以选择很多库，比如我选的这个就带有很多adc cpu gpio巴拉巴拉的库，但是报错说打不开这个IEC60730_march_test.h   </p><p><img src="1.jpg" alt="G2"></p><p>正常情况下 工程右键 project properties link的地方选择路径，把.h给include就行。但是ccs没法改。。</p><p>所以只能自己把</p><pre><code>#include &quot;IEC60730_march_test.h&quot;</code></pre><p>改成以工程文件名为根目录   之后的绝对路径  </p><pre><code>#include &quot;IEC60730/include/IEC60730_march_test.h&quot;</code></pre>]]></content>
+        <content type="html"><![CDATA[<p>云端ccs很方便，直接百度ccs，进去选云端开发就行，虽然不用下CCS会引导下载点和本机串口交互的东西？带有很多库，很爽。想看官方例程直接TI官网随便搜一个搜型号，点进器材贩卖页面， 下面相关的会有430WARE套件可以下。430家所有的都有。开发的时候官网搜data sheet和user guide。</p><p>今天被云端ccs小小的坑了一下。</p><p>云端ccs在建立工程的时候可以选择很多库，比如我选的这个就带有很多adc cpu gpio巴拉巴拉的库，但是报错说打不开这个IEC60730_march_test.h   </p><p><img src="1.jpg" alt="G2"></p><p>正常情况下 工程右键 project properties link的地方选择路径，把.h给include就行。但是ccs没法改。。</p><p>所以只能自己把</p><pre><code>#include &quot;IEC60730_march_test.h&quot;</code></pre><p>改成以工程文件名为根目录   之后的绝对路径  </p><pre><code>#include &quot;IEC60730/include/IEC60730_march_test.h&quot;</code></pre>]]></content>
       
       
       <categories>
