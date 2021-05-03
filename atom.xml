@@ -6,7 +6,7 @@
   <link href="https://huatingzhihoudahao.github.io/blog/atom.xml" rel="self"/>
   
   <link href="https://huatingzhihoudahao.github.io/blog/"/>
-  <updated>2021-05-03T09:34:45.813Z</updated>
+  <updated>2021-05-03T09:43:58.244Z</updated>
   <id>https://huatingzhihoudahao.github.io/blog/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://huatingzhihoudahao.github.io/blog/2021/05/03/%E4%BA%91%E7%AB%AFccs%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%98/"/>
     <id>https://huatingzhihoudahao.github.io/blog/2021/05/03/%E4%BA%91%E7%AB%AFccs%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%98/</id>
     <published>2021-05-03T09:26:40.000Z</published>
-    <updated>2021-05-03T09:34:45.813Z</updated>
+    <updated>2021-05-03T09:43:58.244Z</updated>
     
     <content type="html"><![CDATA[<p>今天被云端ccs小小的坑了一下</p><p>云端ccs在建立工程的时候可以选择很多库，比如我选的这个就带有很多adc cpu gpio巴拉巴拉的库，但是报错说打不开这个IEC60730_march_test.h   </p><p><img src="1.jpg" alt="G2"></p><p>正常情况下 工程右键 project properties link的地方选择路径，把.h给include就行。但是ccs没法改。。</p><p>所以只能自己把</p><pre><code>#include &quot;IEC60730_march_test.h&quot;</code></pre><p>改成以工程文件名为根目录   之后的绝对路径  </p><pre><code>#include &quot;IEC60730/include/IEC60730_march_test.h&quot;</code></pre>]]></content>
     
@@ -34,6 +34,8 @@
       
     
     
+    
+    <category term="嵌入式开发环境" scheme="https://huatingzhihoudahao.github.io/blog/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/"/>
     
     
     <category term="ccs cloud" scheme="https://huatingzhihoudahao.github.io/blog/tags/ccs-cloud/"/>

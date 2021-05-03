@@ -2,14 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://huatingzhihoudahao.github.io/blog/2021/05/03/msp430g2%E9%A2%91%E7%8E%87%E8%AE%A1/</loc>
+    <loc>https://huatingzhihoudahao.github.io/blog/2021/05/03/%E4%BA%91%E7%AB%AFccs%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%98/</loc>
     
     <lastmod>2021-05-03</lastmod>
     
   </url>
   
   <url>
-    <loc>https://huatingzhihoudahao.github.io/blog/2021/05/03/%E4%BA%91%E7%AB%AFccs%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%98/</loc>
+    <loc>https://huatingzhihoudahao.github.io/blog/2021/05/03/msp430g2%E9%A2%91%E7%8E%87%E8%AE%A1/</loc>
     
     <lastmod>2021-05-03</lastmod>
     
@@ -168,6 +168,13 @@
   
   <url>
     <loc>https://huatingzhihoudahao.github.io/blog/categories/hexo/</loc>
+    <lastmod>2021-05-03</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://huatingzhihoudahao.github.io/blog/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</loc>
     <lastmod>2021-05-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
