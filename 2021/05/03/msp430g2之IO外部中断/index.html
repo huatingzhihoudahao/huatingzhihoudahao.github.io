@@ -1,8 +1,8 @@
 <!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><meta name="theme-color" content="#2d4356"><meta name="baidu-site-verification"><title>msp430g2之IO外部中断 | 乔鲁诺正牌女友</title><link rel="stylesheet" type="text/css" href="/blog/css/style.css"><link rel="Shortcut Icon" type="image/x-icon" href="/blog/favicon.png"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/blog/atom.xml" title="乔鲁诺正牌女友" type="application/atom+xml">
 </head><link rel="stylesheet" type="text/css" href="/blog/plugins/highlight/atom-one-dark.min.css"><script type="text/javascript" src="/blog/plugins/highlight/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();
 </script><script type="text/javascript" src="/blog/js/ready.js" async></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"><body class="night"><div class="mobile-head" id="mobile-head"><div class="navbar-icon"><span></span><span></span><span></span></div><div class="navbar-title"><a href="/">GIOGIO</a></div><div class="navbar-search"><!--= show a circle here--></div></div><div class="h-wrapper" id="menu"><nav class="h-head box"><div class="m-hdimg"><a class="hdimg img" href="/blog/"><img class="nofancybox" src="https://huatingzhihoudahao.github.io/blog/img/profile.jpg" width="128" height="128"><!--img(crossOrigin="Anonymous" src="https://github.com/huatingzhihoudahao/blog/tree/gh-pages/img/profile.jpg" class="nofancybox" width="128" height="128")--></a><h1 class="ttl"><a href="/blog/">乔鲁诺正牌女友</a></h1></div><p class="m-desc">我乔鲁诺乔巴纳有一个梦想，那就是成为秧歌star！</p><div class="m-nav"><ul><li><span class="dot">●</span><a href="/blog/archives/">归档</a></li><li><span class="dot">●</span><a href="/blog/categories/">分类</a></li><li><span class="dot">●</span><a href="/blog/tags/">标签</a></li><li><span class="dot">●</span><a href="/blog/about/">关于</a></li><li><span class="dot">●</span><a href="/blog/reference/">参考书</a></li><li><span class="dot">●</span><a href="/blog/atom.xml">RSS</a></li><li class="m-sch"><form class="form" id="j-formsch" method="get"><input class="txt" type="text" id="local-search-input" name="q" value="搜索" onfocus="if(this.value=='搜索'){this.value='';}" onblur="if(this.value==''){this.value='搜索';}"><input type="text" style="display:none;"></form></li></ul><div id="local-search-result"></div></div></nav></div><div id="back2Top"><a class="fa fa-arrow-up" title="Back to top" href="#"></a></div><div class="box" id="container"><div class="l-wrapper"><div class="l-content box"><div class="l-post l-post-art"><article class="p-art"><div class="p-header box"><h1 class="p-title">msp430g2之IO外部中断</h1><div class="p-info"><span class="p-date"><i class="fa fa-calendar"></i><a href="/blog/2021/05/03/msp430g2%E4%B9%8BIO%E5%A4%96%E9%83%A8%E4%B8%AD%E6%96%AD/">2021-05-03</a></span><span class="p-category"><i class="fa fa-folder"></i><a href="/blog/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a></span><span class="p-view" id="busuanzi_container_page_pv"><i class="fa fa-eye"></i><span id="busuanzi_value_page_pv"></span></span></div></div><div class="p-content"><p>同样云端ccs开发，结合g2手册和指导书食用</p>
-<p><img src="LaunchPadMSP430G2553.jpg" alt="G2"></p>
 <p>用的是P1_3 push2 的外部中断</p>
+<p><img src="LaunchPadMSP430G2553.jpg" alt="G2"></p>
 <p><img src="1.jpg" alt="G2"></p>
 <p><img src="2.jpg" alt="G2"></p>
 <p><img src="3.jpg" alt="G2"></p>
@@ -27,15 +27,25 @@ int main(void)
   //LPM4是low power node4 直接进入低功耗模式，会被中断唤醒然后接着睡
 &#125;
 
+/*
 // Port 1 interrupt service routine
 #if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
-#pragma vector=PORT1_VECTOR
+#pragma vector=PORT1_VECTOR//这个是给中断向量表进行赋值的
 __interrupt void Port_1(void)//关键字__interrupt则表示这个函数是中断服务函数这种特殊函数。
 #elif defined(__GNUC__) //这玩意是gcc主版本号，安装gcc了都能过预编译
-void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)
+void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)//GNU C 的一大特色就是__attribute__ 机制。attribute 可以设置函数属性（Function Attribute）、变量属性（Variable Attribute）和类型属性（Type Attribute）。这里是设置Port_1函数为PORT1_VECTOR的中断向量
 #else
 #error Compiler not supported!
 #endif
+&#123;
+  P1OUT ^= BIT0;                            // P1.0 = toggle
+  P1IFG &amp;= ~BIT3;                           // P1.3 IFG cleared
+&#125;
+*/
+
+//其实大家可以不用这么写,这么写就行。
+#pragma vector=PORT1_VECTOR
+__interrupt void Port_1(void)
 &#123;
   P1OUT ^= BIT0;                            // P1.0 = toggle
   P1IFG &amp;= ~BIT3;                           // P1.3 IFG cleared
