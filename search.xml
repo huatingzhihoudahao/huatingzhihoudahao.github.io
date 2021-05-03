@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>energia开发环境</title>
+      <link href="/blog/2021/05/04/energia%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/"/>
+      <url>/blog/2021/05/04/energia%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
+      
+        <content type="html"><![CDATA[<p><a href="https://energia.nu/download/">https://energia.nu/download/</a></p><p>点工具-&gt; 开发板管理器-&gt;下载想要的板子库  </p><p><img src="1.jpg" alt="image-20210504033843670"></p><p>它可以支持TI家基本所有的板子，而且不必读寄存器或者看库函数，直接arduino开发，除了没有断点以外以及只有TI家的库之外，没有什么别的可挑剔的了。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 嵌入式开发环境 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> energia </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>msp430g2之示波器(ADC UART)</title>
       <link href="/blog/2021/05/04/msp430g2%E4%B9%8B%E7%A4%BA%E6%B3%A2%E5%99%A8/"/>
       <url>/blog/2021/05/04/msp430g2%E4%B9%8B%E7%A4%BA%E6%B3%A2%E5%99%A8/</url>

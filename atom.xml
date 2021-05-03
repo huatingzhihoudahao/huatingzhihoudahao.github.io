@@ -1,20 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>乔鲁诺正牌女友</title>
+  <title>我要做秧歌star的钢琴！</title>
   
   
   <link href="https://huatingzhihoudahao.github.io/blog/atom.xml" rel="self"/>
   
   <link href="https://huatingzhihoudahao.github.io/blog/"/>
-  <updated>2021-05-03T19:30:03.148Z</updated>
+  <updated>2021-05-03T19:41:05.064Z</updated>
   <id>https://huatingzhihoudahao.github.io/blog/</id>
   
   <author>
-    <name>做秧歌star的女人</name>
+    <name>做秧歌star的钢琴</name>
     
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>energia开发环境</title>
+    <link href="https://huatingzhihoudahao.github.io/blog/2021/05/04/energia%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/"/>
+    <id>https://huatingzhihoudahao.github.io/blog/2021/05/04/energia%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</id>
+    <published>2021-05-03T19:34:07.000Z</published>
+    <updated>2021-05-03T19:41:05.064Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://energia.nu/download/">https://energia.nu/download/</a></p><p>点工具-&gt; 开发板管理器-&gt;下载想要的板子库  </p><p><img src="1.jpg" alt="image-20210504033843670"></p><p>它可以支持TI家基本所有的板子，而且不必读寄存器或者看库函数，直接arduino开发，除了没有断点以外以及只有TI家的库之外，没有什么别的可挑剔的了。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://energia.nu/download/&quot;&gt;https://energia.nu/download/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;点工具-&amp;gt; 开发板管理器-&amp;gt;下载想要的板子库  &lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;1.jpg&quot; alt</summary>
+      
+    
+    
+    
+    <category term="嵌入式开发环境" scheme="https://huatingzhihoudahao.github.io/blog/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/"/>
+    
+    
+    <category term="energia" scheme="https://huatingzhihoudahao.github.io/blog/tags/energia/"/>
+    
+  </entry>
   
   <entry>
     <title>msp430g2之示波器(ADC UART)</title>
