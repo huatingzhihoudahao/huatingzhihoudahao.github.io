@@ -8,7 +8,7 @@
 <p><img src="3.jpg" alt="G2"></p>
 <p>g2有P1P2两列外部IO中断,需要用PXIE对IO中断使能，IES设置上下边沿触发，REN设置上拉下拉</p>
 <p>&amp;= ~是置0，进入中断之后，中断标志位会自动置1，需要PXIFG=0手动清成0.（有的会做成硬件清0，但是如果懒得查它到底自动不自动，还是直接软件清零吧）</p>
-<p>中断向量是vector=PORT1_VECTOR</p>
+<p>中断向量是vector=PORT1_VECTOR    </p>
 <pre><code class="c">#include &lt;msp430.h&gt;
 
 int main(void)
@@ -51,6 +51,33 @@ __interrupt void Port_1(void)
   P1IFG &amp;= ~BIT3;                           // P1.3 IFG cleared
 &#125;
 </code></pre>
+<p><img src="4.jpg" alt="G2"></p>
+<p>P1八个IO共用这一个中断，如果想要辨别是哪个端口出的低电平，就用IFG来判断，IFG进入中断就硬件置1了。</p>
+<p>用((P1IN&amp;Push_Key)==0)    来确保此刻是按下的，即P1那个导致进入中断的端口还处于低电平还没有恢复原状。</p>
+<pre><code class="c">voidP1_IODect()
+&#123;
+unsigned int Push_Key=0;
+Push_Key=P1IFG&amp;(~P1DIR);//代码1：检测所有输入IO，确保只有1个IO中断被“记录”
+//----延时一段时间，避开机械抖动区域------
+__delay_cycles(10000);//代码2：消灭下降沿2、3、5
+//----判断按键状态是否与延时前一致------
+if((P1IN&amp;Push_Key)==0) //代码3：专门消灭下降沿4
+&#123;//----判断具体哪个IO被按下，调用该IO的事件处理函数
+    switch(Push_Key)//代码4：不用P1IN来判断，以确保有且只有1按键响应
+    &#123;
+        case BIT0: P10_Onclick();break;
+        case BIT1: P11_Onclick();break;
+        case BIT2: P12_Onclick();break;
+        case BIT3: P13_Onclick();break;
+        case BIT4: P14_Onclick();break;
+        case BIT5: P15_Onclick();break;
+        case BIT6: P16_Onclick();break;
+        case BIT7: P17_Onclick();break;
+        default:break;
+    &#125;
+&#125;
+</code></pre>
+<p>P1x_Onclick()自己定义。</p>
 </div><div class="p-copyright"><blockquote><div class="p-copyright-author"><span class="p-copyright-key">帅哥请Q我：</span><span class="p-copytight-value"><a href="mailto:1973511931@qq.com">做秧歌star的女人</a></span></div><div class="p-copyright-link"><span class="p-copyright-key">这里是链接：</span><span class="p-copytight-value"><a href="/blog/2021/05/03/msp430g2%E4%B9%8BIO%E5%A4%96%E9%83%A8%E4%B8%AD%E6%96%AD/">https://huatingzhihoudahao.github.io/blog/2021/05/03/msp430g2之IO外部中断/</a></span></div><div class="p-copyright-note"><span class="p-copyright-key">版权声明：</span><span class="p-copytight-value">本博客所有文章除特殊声明外，均采用<a rel="nofollow" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/"> CC BY-NC 4.0 </a>许可协议。转载请注明出处 <a href="https://huatingzhihoudahao.github.io/blog">做秧歌star的女人</a> </span></div></blockquote></div></article><div class="p-info box"><span class="p-tags"><i class="fa fa-tags"></i><a href="/blog/tags/msp430g2/">msp430g2</a><a href="/blog/tags/ccs/">ccs</a><a href="/blog/tags/IO%E5%A4%96%E9%83%A8%E4%B8%AD%E6%96%AD/">IO外部中断</a></span></div><aside id="toc"><div class="toc-title">目录</div><nav></nav></aside></div><section class="p-ext"><div class="l-pager l-pager-dtl box"><a class="next" href="/blog/2021/05/02/msp430g2%E4%B9%8B%E7%82%B9%E4%BA%AE%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%B0%8F%E7%81%AF/">msp430g2之点亮第一个小灯 &gt;</a></div><div id="valine-comment"><style type="text/css">.night .v[data-class=v] a { color: #0F9FB4 !important; }
 .night .v[data-class=v] a:hover { color: #216C73 !important; }
 .night .v[data-class=v] li { list-style: inherit; }
