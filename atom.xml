@@ -6,7 +6,7 @@
   <link href="https://huatingzhihoudahao.github.io/blog/atom.xml" rel="self"/>
   
   <link href="https://huatingzhihoudahao.github.io/blog/"/>
-  <updated>2021-05-03T04:17:37.993Z</updated>
+  <updated>2021-05-03T06:20:53.321Z</updated>
   <id>https://huatingzhihoudahao.github.io/blog/</id>
   
   <author>
@@ -17,13 +17,45 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>msp430g2频率计</title>
+    <link href="https://huatingzhihoudahao.github.io/blog/2021/05/03/msp430g2%E9%A2%91%E7%8E%87%E8%AE%A1/"/>
+    <id>https://huatingzhihoudahao.github.io/blog/2021/05/03/msp430g2%E9%A2%91%E7%8E%87%E8%AE%A1/</id>
+    <published>2021-05-03T04:34:55.000Z</published>
+    <updated>2021-05-03T06:20:53.321Z</updated>
+    
+    <content type="html"><![CDATA[<p>可以测频率和脉宽，用的Timer_A的捕获模式</p><p>可以测频率和脉宽，用的Timer_A的捕获模式</p><p>板载资源用了P1.2的定时器</p><p><img src="LaunchPadMSP430G2553.jpg" alt="G2"></p><pre><code class="c">#include &lt;msp430.h&gt; unsigned int temp1=0,temp2=0,temp3=0,temp4=0;time1=0,time2=0,time3=0,time4=0;unsigned int cap_flag=0;int overflow=0;long hz=0,maikuan=0;int main(void)&#123;    WDTCTL = WDTPW | WDTHOLD;    // Stop watchdog timer    BCSCTL1 = CALBC1_16MHZ;    DCOCTL = CALDCO_16MHZ;    //P1.2           通用型数字 I/O 引脚    //TA0.2            Timer0_A，捕捉：CCI1A 输入，比较：Out1 输出  P1SEL|=BIT2;//1.1开第二功能  P1DIR&amp;=~BIT2;//1.1设为读  TA0CTL|=TASSEL_2+MC_2+ TACLR+TAIE;  //smclk 16Mhz,不分频,连续计数,置位，开溢出中断  TA0CCTL1|=CM_1+CCIE+CAP+CCIS_0;//上升沿捕获，捕获使能  _EINT();  while(1);&#125;#pragma vector=TIMER0_A1_VECTOR//  响应CCR1的CCIFG CCR2的CCIFG 和溢出中断TAIFG__interrupt void Timer0_A1(void)&#123;     switch( TA0IV ) //查TAIV看是哪个中断响应    &#123; case 2:              cap_flag++; //CCR1的CCIFG              if(cap_flag==1)//第一次检测的是上升沿              &#123; overflow=0;                TA0CCTL1&amp;=~CM_1;                TA0CCTL1|=CM_2;//改成下降沿捕获                TA0CTL|= TACLR; //清定时器              &#125;              if(cap_flag==2)//这次捕获的是下降沿              &#123;  temp1=TA0CCR1;                 time1=overflow;                 TA0CCTL1&amp;=~CM_2;                 TA0CCTL1|=CM_1;//改成上升沿捕获              &#125;              if(cap_flag==3)//这次是上升沿捕获              &#123;                temp2=TA0CCR1;                time2=overflow;                hz=16000000/(time2*65536+temp2); //第二次计数的ccr1会经过可能一些周期，所以记得overflow*65536                maikuan=((time1*65536+temp1)*100)/(time2*65536+temp2);                cap_flag=0;              &#125;              break;     case 4:              break;     case 10: overflow++;//溢出中断的TAIFG,溢出一次加1          break;     &#125;&#125;//这里遇到了一个问题，就是配置CCTL|=CM_1之后，想要改为CM_2,要先&amp;=~CM_1，再|=CM_2//不然先|=CM_1,和010000……或    再|=CM_2,和10000……或，合起来就是11000……，也就是配置成了CM_3上下沿都捕获</code></pre><p>效果如图</p><p><img src="%E6%95%88%E6%9E%9C.jpg" alt="G2"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;可以测频率和脉宽，用的Timer_A的捕获模式&lt;/p&gt;
+&lt;p&gt;可以测频率和脉宽，用的Timer_A的捕获模式&lt;/p&gt;
+&lt;p&gt;板载资源用了P1.2的定时器&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;LaunchPadMSP430G2553.jpg&quot; alt=&quot;G2&quot;&gt;&lt;/p&gt;
+&lt;pr</summary>
+      
+    
+    
+    
+    <category term="嵌入式" scheme="https://huatingzhihoudahao.github.io/blog/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/"/>
+    
+    
+    <category term="msp430g2" scheme="https://huatingzhihoudahao.github.io/blog/tags/msp430g2/"/>
+    
+    <category term="ccs" scheme="https://huatingzhihoudahao.github.io/blog/tags/ccs/"/>
+    
+    <category term="Timer_A中断" scheme="https://huatingzhihoudahao.github.io/blog/tags/Timer-A%E4%B8%AD%E6%96%AD/"/>
+    
+  </entry>
+  
+  <entry>
     <title>msp430g2之IO外部中断</title>
     <link href="https://huatingzhihoudahao.github.io/blog/2021/05/03/msp430g2%E4%B9%8BIO%E5%A4%96%E9%83%A8%E4%B8%AD%E6%96%AD/"/>
     <id>https://huatingzhihoudahao.github.io/blog/2021/05/03/msp430g2%E4%B9%8BIO%E5%A4%96%E9%83%A8%E4%B8%AD%E6%96%AD/</id>
     <published>2021-05-02T18:59:55.000Z</published>
-    <updated>2021-05-03T04:17:37.993Z</updated>
+    <updated>2021-05-03T04:21:23.399Z</updated>
     
-    <content type="html"><![CDATA[<p>同样云端ccs开发，结合g2手册和指导书食用</p><p>用的是P1_3 push2 的外部中断</p><p><img src="LaunchPadMSP430G2553.jpg" alt="G2"></p><p><img src="1.jpg" alt="G2"></p><p><img src="2.jpg" alt="G2"></p><p><img src="3.jpg" alt="G2"></p><p>g2有P1P2两列外部IO中断,需要用PXIE对IO中断使能，IES设置上下边沿触发，REN设置上拉下拉</p><p>&amp;= ~是置0，进入中断之后，中断标志位会自动置1，需要PXIFG=0手动清成0.（有的会做成硬件清0，但是如果懒得查它到底自动不自动，还是直接软件清零吧）</p><p>中断向量是vector=PORT1_VECTOR    </p><pre><code class="c">#include &lt;msp430.h&gt;int main(void)&#123;  WDTCTL = WDTPW + WDTHOLD;                 // Stop watchdog timer  P1DIR |= BIT0;                            // Set P1.0 to output direction  P1IE |=  BIT3;                            // P1.3 interrupt enabled  P1IES |= BIT3;                            // P1.3 Hi/lo edge  P1REN |= BIT3;                            // Enable Pull Up on SW2 (P1.3)  P1IFG &amp;= ~BIT3;                           // P1.3 IFG cleared                                                            //BIT3 on Port 1 can be used as Switch2                                              __bis_SR_register(LPM4_bits + GIE);       // Enter LPM4 w/interrupt  //把SR寄存器的GIE位置位，也可以用_enable_interrupts();  即总中断使能   //LPM4是low power node4 直接进入低功耗模式，会被中断唤醒然后接着睡&#125;/*// Port 1 interrupt service routine#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)#pragma vector=PORT1_VECTOR//这个是给中断向量表进行赋值的__interrupt void Port_1(void)//关键字__interrupt则表示这个函数是中断服务函数这种特殊函数。#elif defined(__GNUC__) //这玩意是gcc主版本号，安装gcc了都能过预编译void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)//GNU C 的一大特色就是__attribute__ 机制。attribute 可以设置函数属性（Function Attribute）、变量属性（Variable Attribute）和类型属性（Type Attribute）。这里是设置Port_1函数为PORT1_VECTOR的中断向量#else#error Compiler not supported!#endif&#123;  P1OUT ^= BIT0;                            // P1.0 = toggle  P1IFG &amp;= ~BIT3;                           // P1.3 IFG cleared&#125;*///其实大家可以不用这么写,这么写就行。#pragma vector=PORT1_VECTOR__interrupt void Port_1(void)&#123;  P1OUT ^= BIT0;                            // P1.0 = toggle  P1IFG &amp;= ~BIT3;                           // P1.3 IFG cleared&#125;</code></pre><p><img src="4.jpg" alt="G2"></p><p>P1八个IO共用这一个中断，如果想要辨别是哪个端口出的低电平，就用IFG来判断，IFG进入中断就硬件置1了。</p><p>用((P1IN&amp;Push_Key)==0)    来确保此刻是按下的，即P1那个导致进入中断的端口还处于低电平还没有恢复原状。</p><pre><code class="c">voidP1_IODect()&#123;unsigned int Push_Key=0;Push_Key=P1IFG&amp;(~P1DIR);//代码1：检测所有输入IO，确保只有1个IO中断被“记录”//----延时一段时间，避开机械抖动区域------__delay_cycles(10000);//代码2：消灭下降沿2、3、5//----判断按键状态是否与延时前一致------if((P1IN&amp;Push_Key)==0) //代码3：专门消灭下降沿4&#123;//----判断具体哪个IO被按下，调用该IO的事件处理函数    switch(Push_Key)//代码4：不用P1IN来判断，以确保有且只有1按键响应    &#123;        case BIT0: P10_Onclick();break;        case BIT1: P11_Onclick();break;        case BIT2: P12_Onclick();break;        case BIT3: P13_Onclick();break;        case BIT4: P14_Onclick();break;        case BIT5: P15_Onclick();break;        case BIT6: P16_Onclick();break;        case BIT7: P17_Onclick();break;        default:break;    &#125;&#125;</code></pre><p>P1x_Onclick()自己定义。</p>]]></content>
+    <content type="html"><![CDATA[<p>同样云端ccs开发，结合g2手册和指导书食用</p><p>用的是P1_3 push2 的外部中断</p><p><img src="LaunchPadMSP430G2553.jpg" alt="G2"></p><p><img src="1.jpg" alt="G2"></p><p><img src="2.png" alt="G2"></p><p><img src="3.jpg" alt="G2"></p><p>g2有P1P2两列外部IO中断,需要用PXIE对IO中断使能，IES设置上下边沿触发，REN设置上拉下拉</p><p>&amp;= ~是置0，进入中断之后，中断标志位会自动置1，需要PXIFG=0手动清成0.（有的会做成硬件清0，但是如果懒得查它到底自动不自动，还是直接软件清零吧）</p><p>中断向量是vector=PORT1_VECTOR    </p><pre><code class="c">#include &lt;msp430.h&gt;int main(void)&#123;  WDTCTL = WDTPW + WDTHOLD;                 // Stop watchdog timer  P1DIR |= BIT0;                            // Set P1.0 to output direction  P1IE |=  BIT3;                            // P1.3 interrupt enabled  P1IES |= BIT3;                            // P1.3 Hi/lo edge  P1REN |= BIT3;                            // Enable Pull Up on SW2 (P1.3)  P1IFG &amp;= ~BIT3;                           // P1.3 IFG cleared                                                            //BIT3 on Port 1 can be used as Switch2                                              __bis_SR_register(LPM4_bits + GIE);       // Enter LPM4 w/interrupt  //把SR寄存器的GIE位置位，也可以用_enable_interrupts();  即总中断使能   //LPM4是low power node4 直接进入低功耗模式，会被中断唤醒然后接着睡&#125;/*// Port 1 interrupt service routine#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)#pragma vector=PORT1_VECTOR//这个是给中断向量表进行赋值的__interrupt void Port_1(void)//关键字__interrupt则表示这个函数是中断服务函数这种特殊函数。#elif defined(__GNUC__) //这玩意是gcc主版本号，安装gcc了都能过预编译void __attribute__ ((interrupt(PORT1_VECTOR))) Port_1 (void)//GNU C 的一大特色就是__attribute__ 机制。attribute 可以设置函数属性（Function Attribute）、变量属性（Variable Attribute）和类型属性（Type Attribute）。这里是设置Port_1函数为PORT1_VECTOR的中断向量#else#error Compiler not supported!#endif&#123;  P1OUT ^= BIT0;                            // P1.0 = toggle  P1IFG &amp;= ~BIT3;                           // P1.3 IFG cleared&#125;*///其实大家可以不用这么写,这么写就行。#pragma vector=PORT1_VECTOR__interrupt void Port_1(void)&#123;  P1OUT ^= BIT0;                            // P1.0 = toggle  P1IFG &amp;= ~BIT3;                           // P1.3 IFG cleared&#125;</code></pre><p><img src="4.jpg" alt="G2"></p><p>P1八个IO共用这一个中断，如果想要辨别是哪个端口出的低电平，就用IFG来判断，IFG进入中断就硬件置1了。</p><p>用((P1IN&amp;Push_Key)==0)    来确保此刻是按下的，即P1那个导致进入中断的端口还处于低电平还没有恢复原状。</p><pre><code class="c">voidP1_IODect()&#123;unsigned int Push_Key=0;Push_Key=P1IFG&amp;(~P1DIR);//代码1：检测所有输入IO，确保只有1个IO中断被“记录”//----延时一段时间，避开机械抖动区域------__delay_cycles(10000);//代码2：消灭下降沿2、3、5//----判断按键状态是否与延时前一致------if((P1IN&amp;Push_Key)==0) //代码3：专门消灭下降沿4&#123;//----判断具体哪个IO被按下，调用该IO的事件处理函数    switch(Push_Key)//代码4：不用P1IN来判断，以确保有且只有1按键响应    &#123;        case BIT0: P10_Onclick();break;        case BIT1: P11_Onclick();break;        case BIT2: P12_Onclick();break;        case BIT3: P13_Onclick();break;        case BIT4: P14_Onclick();break;        case BIT5: P15_Onclick();break;        case BIT6: P16_Onclick();break;        case BIT7: P17_Onclick();break;        default:break;    &#125;&#125;</code></pre><p>P1x_Onclick()自己定义。</p>]]></content>
     
     
       
@@ -82,15 +114,15 @@
     <link href="https://huatingzhihoudahao.github.io/blog/2021/05/02/msp430g2553%E7%9A%84%E4%B8%B2%E5%8F%A3%E5%B1%8F%EF%BC%88%E5%8A%A0%E6%8C%89%E9%92%AE%EF%BC%89/"/>
     <id>https://huatingzhihoudahao.github.io/blog/2021/05/02/msp430g2553%E7%9A%84%E4%B8%B2%E5%8F%A3%E5%B1%8F%EF%BC%88%E5%8A%A0%E6%8C%89%E9%92%AE%EF%BC%89/</id>
     <published>2021-05-02T03:03:09.137Z</published>
-    <updated>2021-05-02T13:01:47.117Z</updated>
+    <updated>2021-05-03T04:42:25.607Z</updated>
     
-    <content type="html"><![CDATA[<p>g2是我大一学的，上手的第一块板子，开发用的ccs，就算之后用什么高级板子什么ide，我也没忘了这糟糠之妻（因为它实在是太适合新手上手了–它的教程写的实在太好了，就那本launchpad开发指南，详细易懂还严谨）。为了复习，从示波器开始吧</p><h3 id="板载资源"><a href="#板载资源" class="headerlink" title="板载资源"></a>板载资源</h3><h3 id><a href="#" class="headerlink" title></a></h3><p><img src="LaunchPadMSP430G2553.jpg" alt="G2"></p><p>从energia官网下载的pinmaps（energia是一个高度类似arduino的编译环境，虽然不能断点调试只能串口调试，但是官网这个真的香，TI家的板子大部分都有，而且还能导入到ccs调试）。</p>]]></content>
+    <content type="html"><![CDATA[<p>g2是我大一学的，上手的第一块板子，开发用的ccs，就算之后用什么高级板子什么ide，我也没忘了这糟糠之妻（因为它实在是太适合新手上手了–它的教程写的实在太好了，就那本launchpad开发指南，详细易懂还严谨）。</p><h3 id="板载资源"><a href="#板载资源" class="headerlink" title="板载资源"></a>板载资源</h3><h3 id><a href="#" class="headerlink" title></a></h3><p><img src="LaunchPadMSP430G2553.jpg" alt="G2"></p><p>从energia官网下载的pinmaps（energia是一个高度类似arduino的编译环境，虽然不能断点调试只能串口调试，但是官网这个真的香，TI家的板子大部分都有，而且还能导入到ccs调试）。</p>]]></content>
     
     
       
       
-    <summary type="html">&lt;p&gt;g2是我大一学的，上手的第一块板子，开发用的ccs，就算之后用什么高级板子什么ide，我也没忘了这糟糠之妻（因为它实在是太适合新手上手了–它的教程写的实在太好了，就那本launchpad开发指南，详细易懂还严谨）。为了复习，从示波器开始吧&lt;/p&gt;
-&lt;h3 id=&quot;板载资源&quot;</summary>
+    <summary type="html">&lt;p&gt;g2是我大一学的，上手的第一块板子，开发用的ccs，就算之后用什么高级板子什么ide，我也没忘了这糟糠之妻（因为它实在是太适合新手上手了–它的教程写的实在太好了，就那本launchpad开发指南，详细易懂还严谨）。&lt;/p&gt;
+&lt;h3 id=&quot;板载资源&quot;&gt;&lt;a href=&quot;#板</summary>
       
     
     
@@ -138,15 +170,15 @@
     <link href="https://huatingzhihoudahao.github.io/blog/2021/04/30/hello-world/"/>
     <id>https://huatingzhihoudahao.github.io/blog/2021/04/30/hello-world/</id>
     <published>2021-04-30T12:51:00.746Z</published>
-    <updated>2021-05-02T06:44:32.261Z</updated>
+    <updated>2021-05-03T04:31:35.861Z</updated>
     
-    <content type="html"><![CDATA[<p>记得指令都在部署git的文件下，我的是myblog 。三件套 hexo clean/ hexo g/ hexo d 不过网不好可能d不上去，再多试试</p><h4 id="Welcome-to-Hexo-This-is-your-very-first-post-Check-documentation-for-more-info-If-you-get-any-problems-when-using-Hexo-you-can-find-the-answer-in-troubleshooting-or-you-can-ask-me-on-GitHub"><a href="#Welcome-to-Hexo-This-is-your-very-first-post-Check-documentation-for-more-info-If-you-get-any-problems-when-using-Hexo-you-can-find-the-answer-in-troubleshooting-or-you-can-ask-me-on-GitHub" class="headerlink" title="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub."></a>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</h4><h1 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h1><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;</code></pre><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server</code></pre><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate</code></pre><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy</code></pre><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    <content type="html"><![CDATA[<p>记得指令都在部署git的文件下，我的是myblog 。三件套 hexo clean/ hexo g/ hexo d 不过网不好可能d不上去，再多试试</p><p>host new post xxx   建一个新的md，如果安装hexo-asset-image插件之后会自动创一个同名的文件夹用来放图片</p><p>host new page xxx 建一个新的page，如果想要添加到左边导航栏，需要自己在主题的_config里面更改 比如这个是我用的snark主题的meua  reference是我新加的 。new一个新page然后编译上传之后就会出现一个新的 一大堆前缀/blog/xxx/ 页面可以访问了。</p><pre><code>menu:  - page: 归档    directory: archives/  - page: 分类    directory: categories/  - page: 标签    directory: tags/  - page: 关于    directory: about/  - page: 参考书    directory: reference/  - page: rss    directory: atom.xml</code></pre><p>想插入pdf就百度一下 安一个pdf的插件，然后把pdf扔进source里，想在md里插pdf就写好绝对路径就行</p><p><img src="1.jpg" alt="1"></p><h4 id="Welcome-to-Hexo-This-is-your-very-first-post-Check-documentation-for-more-info-If-you-get-any-problems-when-using-Hexo-you-can-find-the-answer-in-troubleshooting-or-you-can-ask-me-on-GitHub"><a href="#Welcome-to-Hexo-This-is-your-very-first-post-Check-documentation-for-more-info-If-you-get-any-problems-when-using-Hexo-you-can-find-the-answer-in-troubleshooting-or-you-can-ask-me-on-GitHub" class="headerlink" title="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub."></a>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</h4><h1 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h1><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;</code></pre><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server</code></pre><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate</code></pre><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy</code></pre><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
     
     
       
       
     <summary type="html">&lt;p&gt;记得指令都在部署git的文件下，我的是myblog 。三件套 hexo clean/ hexo g/ hexo d 不过网不好可能d不上去，再多试试&lt;/p&gt;
-&lt;h4 id=&quot;Welcome-to-Hexo-This-is-your-very-first-post-Check</summary>
+&lt;p&gt;host new post xxx   建一个新的md，如果安装hexo-asset-image插件之后会自动</summary>
       
     
     
