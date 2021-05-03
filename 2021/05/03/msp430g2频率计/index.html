@@ -2,18 +2,36 @@
 </head><link rel="stylesheet" type="text/css" href="/blog/plugins/highlight/atom-one-dark.min.css"><script type="text/javascript" src="/blog/plugins/highlight/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();
 </script><script type="text/javascript" src="/blog/js/ready.js" async></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"><body class="night"><div class="mobile-head" id="mobile-head"><div class="navbar-icon"><span></span><span></span><span></span></div><div class="navbar-title"><a href="/">GIOGIO</a></div><div class="navbar-search"><!--= show a circle here--></div></div><div class="h-wrapper" id="menu"><nav class="h-head box"><div class="m-hdimg"><a class="hdimg img" href="/blog/"><img class="nofancybox" src="https://huatingzhihoudahao.github.io/blog/img/profile.jpg" width="128" height="128"><!--img(crossOrigin="Anonymous" src="https://github.com/huatingzhihoudahao/blog/tree/gh-pages/img/profile.jpg" class="nofancybox" width="128" height="128")--></a><h1 class="ttl"><a href="/blog/">乔鲁诺正牌女友</a></h1></div><p class="m-desc">我乔鲁诺乔巴纳有一个梦想，那就是成为秧歌star！</p><div class="m-nav"><ul><li><span class="dot">●</span><a href="/blog/archives/">归档</a></li><li><span class="dot">●</span><a href="/blog/categories/">分类</a></li><li><span class="dot">●</span><a href="/blog/tags/">标签</a></li><li><span class="dot">●</span><a href="/blog/about/">关于</a></li><li><span class="dot">●</span><a href="/blog/reference/">参考书</a></li><li><span class="dot">●</span><a href="/blog/atom.xml">RSS</a></li><li class="m-sch"><form class="form" id="j-formsch" method="get"><input class="txt" type="text" id="local-search-input" name="q" value="搜索" onfocus="if(this.value=='搜索'){this.value='';}" onblur="if(this.value==''){this.value='搜索';}"><input type="text" style="display:none;"></form></li></ul><div id="local-search-result"></div></div></nav></div><div id="back2Top"><a class="fa fa-arrow-up" title="Back to top" href="#"></a></div><div class="box" id="container"><div class="l-wrapper"><div class="l-content box"><div class="l-post l-post-art"><article class="p-art"><div class="p-header box"><h1 class="p-title">msp430g2频率计</h1><div class="p-info"><span class="p-date"><i class="fa fa-calendar"></i><a href="/blog/2021/05/03/msp430g2%E9%A2%91%E7%8E%87%E8%AE%A1/">2021-05-03</a></span><span class="p-category"><i class="fa fa-folder"></i><a href="/blog/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a></span><span class="p-view" id="busuanzi_container_page_pv"><i class="fa fa-eye"></i><span id="busuanzi_value_page_pv"></span></span></div></div><div class="p-content"><p>可以测频率和脉宽，用的Timer_A的捕获模式</p>
 <p>先上pinmap</p>
-<p>g2553只有一个timer_A模块，其中包括1个16位定时器和3个捕获比较模块（CCRX）。（网上误人子弟把g2通用手册的timerA和timerB截图放上去说2553有timerA和timerB，不要信。要看看底下这个官网的datesheet里的图，而不是看通用的那种用户手册）</p>
+<p>g2553有两个的timer_A模块，每一个包括1个16位定时器和3个捕获比较模块（CCRX）。（网上误人子弟把g2通用手册的timerA和timerB截图放上去说2553有timerA和timerB，不要信。要看看底下这个官网的datesheet里的图，而不是看通用的那种用户手册）</p>
+<p><img src="%E6%A8%A1%E5%9D%97.jpg" alt="image-20210503144441840"></p>
 <p><img src="pinmap.jpg" alt="image-20210503144441840"></p>
 <p><img src="image-20210503155430023.png" alt="image-20210503155430023"></p>
-<p>包括1个16位定时器和3个捕获比较模块（CCRX），</p>
-<p>定时器就搁那计数就完了，计数值被存放在TAR寄存器。配置就这个</p>
+<p>g2553的timer_A模块包括1个16位定时器和3个捕获比较模块（CCRX），定时器就搁那计数就完了，计数值被存放在TAR寄存器。配置就这个</p>
 <p><img src="1.jpg" alt="image-20210503144441840"></p>
-<p> 那边CCRx比较捕获模块，CCR0，CCR1，CCR2性质一样，在比较的时候用TAR与TACCRx对比，在捕获的时候把TAR存入TACCRx。不能同时捕获和比较。配置就这个</p>
+<p> 那边CCRx比较捕获模块，CCR0，CCR1，CCR2性质基本一样，</p>
+<p>在比较的时候用TAR与TACCRx对比，计数到对比一致时对应的CCIFG置位。</p>
+<p>在捕获的时候把TAR存入TACCRx，把对应的CCIFG置位。</p>
+<p>不能同时捕获和比较。配置就这个</p>
 <p><img src="2.jpg" alt="image-20210503174039643"></p>
 <p> TAR与TACCRx就是放数字的16位寄存器</p>
-<p>可以测频率和脉宽，用的Timer_A的捕获模式</p>
-<p>板载资源用了P1.2的定时器</p>
-<p><img src="LaunchPadMSP430G2553.jpg" alt="G2"></p>
+<p>但是：CCR0是特殊的。 特殊在于：TACCR0 CCIFG 有自己单独的中断向量TACCR0  而且优先级最高。</p>
+<p>而其他的CCIFG(指的是比较捕获模块CCR1 CCR2)和  TAIFG（溢出中断）都用一个中断向量TAIV。想分别是哪个CCIFG还是说TAIFG触发的这个中断，还需要查TAIV(寄存器用户指南371页)，像IO中断那样 （由于有两个定时器所以查的时候是TA0IV这样）</p>
+<p>为什么搞特殊 ，因为CCR0就是用来控制timerA的定时器模块的周期的。</p>
+<p>也就是说整个timerA两大部分，一边是定时器模块一边是比较捕获模块，</p>
+<p>在上数模式下CCR0可以确定定时器模块的周期从0-2000增计数，那就会0-2000，然后0-2000雷打不动的计（虽然最高的65535但是CCR0定了就确定他到CCR0设置的那个点了就会按照设定的增/减/增减模式 走）    </p>
+<p>而CCR1 和CCR2 只是说自己利用这个计数器，到了什么点，比如比较模式就比较计数器记的数有没有到自己要求的那个TACCR1值，到了就自己找个小旗子记一下（即CCIFG1置位。）  </p>
+<p>溢出中断就是定时器模块的溢出中断的，依赖于定时器模块最后的模式。</p>
+<p>就是比如在上数模式下从TACCR0的2000满了，重新到0，这就记一个溢出中断TAIFG</p>
+<p>在连续模式下，计数到65535就溢出，重新到0，这也记一个溢出中断TAIFG。</p>
+<p>比较模式一般用于输出，就计数计到多少翻转电平之类的，用于输出PWM.输出的方式啥的看比较捕获控制寄存器的outmode  （看寄存器手册362页）</p>
+<p>捕获模式捕获的哪一个端口的看CCIS选的是CCIxA还是CCIxB</p>
+<p><img src="3.jpg" alt="image-20210503174039643"></p>
+<p>哪个端口是CCIxA还是CCIxB  看寄存器用户手册会让我们看data sheet 。反正就 要看哪个脚复用成哪个功能就看数据手册，寄存器就看用户手册。不会写代码就看指导书或者官网。</p>
+<p>可以看到TA0 的CCI0A在P1.1    CCI1A在P1.2  其他的看data sheet把 今天就用这个CCR1比较捕获模块的A口，即P1.2。想复用的话，P1SEL的BIT2要置1，P1SEL2的不能置1.</p>
+<p>总结一遍：G2553有两个定时器即为timer0_A和timer1_A，每一个由一个定时器模块(溢出中断TAIFG)   和  三个比较捕获模块(CCR0，CCR1，CCR2组成，其中CCR0在非连续模式下用来设置定时器模块的周期)。</p>
+<p>板载资源用了timer0的CCR1的CCI1A   即TA0.1的 A口    P1.2</p>
+<p>下面这个代码是65535默认周期，CCR1捕获，连续计数上升沿捕获。方法图如下</p>
+<p><img src="%E5%9B%BE.jpg" alt="G2">  </p>
 <pre><code class="c">
 #include &lt;msp430.h&gt; 
 unsigned int temp1=0,temp2=0,temp3=0,temp4=0;time1=0,time2=0,time3=0,time4=0;
@@ -26,8 +44,8 @@ int main(void)
     BCSCTL1 = CALBC1_16MHZ;
     DCOCTL = CALDCO_16MHZ;
     //P1.2           通用型数字 I/O 引脚
-    //TA0.2            Timer0_A，捕捉：CCI1A 输入，比较：Out1 输出
-  P1SEL|=BIT2;//1.2开第二功能
+    //TA0.1            Timer0_A，捕捉：CCI1A 输入，比较：Out1 输出
+  P1SEL|=BIT2;//1.2开第二功能，没有动P1SEL2，P1SEL2也置1那就复用成uart模式了
   P1DIR&amp;=~BIT2;//1.2设为读
   TA0CTL|=TASSEL_2+MC_2+ TACLR+TAIE;
   //smclk 16Mhz,不分频,连续计数,置位，开溢出中断
