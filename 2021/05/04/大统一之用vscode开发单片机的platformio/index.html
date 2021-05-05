@@ -31,7 +31,7 @@ void loop() &#123;
 </code></pre>
 <p><img src="4.jpg" alt="image-20210504033843670"></p>
 <p>点这个√就可以编译啦，-&gt;就是烧录咯</p>
-<h3 id="第三方库"><a href="#第三方库" class="headerlink" title="第三方库"></a>第三方库</h3><p>比如我现在想用TFT屏幕，就去了pio home的libraries搜tft。有个adafruit ILI9341，</p>
+<h3 id="在加一个第三方库的时候，很有可能还需要手动在ini配置里加上其依赖的第三方库"><a href="#在加一个第三方库的时候，很有可能还需要手动在ini配置里加上其依赖的第三方库" class="headerlink" title="在加一个第三方库的时候，很有可能还需要手动在ini配置里加上其依赖的第三方库"></a>在加一个第三方库的时候，很有可能还需要手动在ini配置里加上其依赖的第三方库</h3><p>比如我现在想用TFT屏幕，就去了pio home的libraries搜tft。有个adafruit ILI9341，</p>
 <p>就用这家的吧 adafruit做了很多库。</p>
 <p><img src="5.jpg" alt="image-20210504033843670"></p>
 <p>选好版本，点add to project 就会自动添加到platformio.ini，  配置文件里只会添加这一个库</p>
@@ -47,8 +47,8 @@ void loop() &#123;
 <p>尝试编译，由于ini配置里指定了依赖，所以新加的库也都会被编译。</p>
 <p><img src="11.jpg" alt="image-20210504033843670"></p>
 <p><img src="12.jpg" alt="image-20210504033843670"></p>
-<p>这个时候就有意思了，会发现，欸？怎么还找不到wire.h和spi.h？ 这又是啥？</p>
-<p>这其实是tiva的官方库。</p>
+<p>这个时候就有意思了，会发现，</p>
+<h3 id="欸？怎么还找不到wire-h和spi-h？（需要手动添加tiva官方库）"><a href="#欸？怎么还找不到wire-h和spi-h？（需要手动添加tiva官方库）" class="headerlink" title="欸？怎么还找不到wire.h和spi.h？（需要手动添加tiva官方库）"></a>欸？怎么还找不到wire.h和spi.h？（需要手动添加tiva官方库）</h3><p> 这其实是tiva的官方库。</p>
 <h3 id="来解释一下energia官方为了让我们能把tivac当成arduino开发提供了什么东西。"><a href="#来解释一下energia官方为了让我们能把tivac当成arduino开发提供了什么东西。" class="headerlink" title="来解释一下energia官方为了让我们能把tivac当成arduino开发提供了什么东西。"></a>来解释一下energia官方为了让我们能把tivac当成arduino开发提供了什么东西。</h3><p>看过energia博客的应该知道，energia是TI做的一个把自己家板子包装成arduino的framework的一个平台，比如我们在用tivac的时候需要在开发板管理器那下载对应的包装</p>
 <p><img src="13.jpg" alt="image-20210504033843670"></p>
 <p>这样在示例中会有core，确保tivac可以用arduino的开发方式开发。</p>
@@ -69,8 +69,8 @@ void loop() &#123;
 <p>而就像energia里，这些库我们不选他做例程，也不会include，所以在platformio里，如果用到这些库，都是需要手动添加到ini配置里的.</p>
 <p><img src="20.jpg" alt="image-20210505032903466"></p>
 <p>现在库都添加完咯</p>
-<p>开心的编译，结果发现出现一大堆错误呢。</p>
-<p><img src="21.jpg" alt="image-20210505032903466"></p>
+<p>开心的编译，结果发现出现一大堆错误呢，</p>
+<h3 id="说我没定义BitOrder，（需要手动宏定义带上板子型号）"><a href="#说我没定义BitOrder，（需要手动宏定义带上板子型号）" class="headerlink" title="说我没定义BitOrder，（需要手动宏定义带上板子型号）"></a>说我没定义BitOrder，（需要手动宏定义带上板子型号）</h3><p><img src="21.jpg" alt="image-20210505032903466"></p>
 <pre><code class="c">// some modern SPI definitions don&#39;t have BitOrder enum
 #if (defined(__AVR__) &amp;&amp; !defined(ARDUINO_ARCH_MEGAAVR)) ||                    \
     defined(ESP8266) || defined(TEENSYDUINO) || defined(SPARK) ||              \
@@ -181,7 +181,8 @@ typedef enum _BitOrder &#123;
   SPI_BITORDER_LSBFIRST = LSBFIRST,
 &#125; BitOrder;
 </code></pre>
-<p>开心编译，结果好家伙，这回这个adafruit的库说我们没有SPISettings的函数，我这去它include的SPI.h查了一圈，还真没有。我就在想会不会是因为它是tivac所以没有，没有封装。于是我去新建了一个本来就是arduino工程的，它的spi.h还真有这个函数。</p>
+<p>开心编译，结果好家伙，</p>
+<h3 id="这回这个adafruit的库说我们没有SPISettings的函数（PIO的tiva官方库更新不够快）"><a href="#这回这个adafruit的库说我们没有SPISettings的函数（PIO的tiva官方库更新不够快）" class="headerlink" title="这回这个adafruit的库说我们没有SPISettings的函数（PIO的tiva官方库更新不够快）"></a>这回这个adafruit的库说我们没有SPISettings的函数（PIO的tiva官方库更新不够快）</h3><p>我这去它include的SPI.h查了一圈，还真没有。我就在想会不会是因为它是tivac所以没有，没有封装。于是我去新建了一个本来就是arduino工程的，它的spi.h还真有这个函数。</p>
 <p>这个时候我福临心智，去看看energia的tiva官方给我们的spi.h里有没有把。被我这一看，还真有。。</p>
 <p>昊佳告诉我很有可能是官方的可能更新了，plantform的没更新。</p>
 <p>我把spi.h覆盖掉了，但是又有新的没命名的错，是pin_energia.h的不一样。。我又去替换，结果又有错。我要吐啦。</p>
@@ -189,7 +190,118 @@ typedef enum _BitOrder &#123;
 <p><img src="22.png" alt="image-20210505032903466"></p>
 <p><img src="23.png" alt="image-20210505032903466"></p>
 <p>我又用g2  也没一个好使的。。。我服啦、、、、、、、、！这是什么狗屁垃圾库。</p>
-</div><div class="p-copyright"><blockquote><div class="p-copyright-author"><span class="p-copyright-key">帅哥请Q我：</span><span class="p-copytight-value"><a href="mailto:1973511931@qq.com">做秧歌star的钢琴</a></span></div><div class="p-copyright-link"><span class="p-copyright-key">这里是链接：</span><span class="p-copytight-value"><a href="/blog/2021/05/04/%E5%A4%A7%E7%BB%9F%E4%B8%80%E4%B9%8B%E7%94%A8vscode%E5%BC%80%E5%8F%91%E5%8D%95%E7%89%87%E6%9C%BA%E7%9A%84platformio/">https://huatingzhihoudahao.github.io/blog/2021/05/04/大统一之用vscode开发单片机的platformio/</a></span></div><div class="p-copyright-note"><span class="p-copyright-key">版权声明：</span><span class="p-copytight-value">本博客所有文章除特殊声明外，均采用<a rel="nofollow" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/"> CC BY-NC 4.0 </a>许可协议。转载请注明出处 <a href="https://huatingzhihoudahao.github.io/blog">做秧歌star的钢琴</a> </span></div></blockquote></div></article><div class="p-info box"><span class="p-tags"><i class="fa fa-tags"></i><a href="/blog/tags/vscode/">vscode</a><a href="/blog/tags/platformio/">platformio</a><a href="/blog/tags/%E5%85%A8%E5%91%98arduino/">全员arduino</a></span></div><aside id="toc"><div class="toc-title">目录</div><nav><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%88%E4%B8%8Apinmap"><span class="toc-number">1.</span> <span class="toc-text">先上pinmap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PIO%E5%88%9D%E5%BB%BA"><span class="toc-number">2.</span> <span class="toc-text">PIO初建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%88%E6%89%BE%E5%BC%95%E8%84%9A"><span class="toc-number">3.</span> <span class="toc-text">先找引脚</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-number">4.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93"><span class="toc-number">5.</span> <span class="toc-text">第三方库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%A5%E8%A7%A3%E9%87%8A%E4%B8%80%E4%B8%8Benergia%E5%AE%98%E6%96%B9%E4%B8%BA%E4%BA%86%E8%AE%A9%E6%88%91%E4%BB%AC%E8%83%BD%E6%8A%8Ativac%E5%BD%93%E6%88%90arduino%E5%BC%80%E5%8F%91%E6%8F%90%E4%BE%9B%E4%BA%86%E4%BB%80%E4%B9%88%E4%B8%9C%E8%A5%BF%E3%80%82"><span class="toc-number">6.</span> <span class="toc-text">来解释一下energia官方为了让我们能把tivac当成arduino开发提供了什么东西。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%8D%E6%9D%A5%E7%9C%8Bplatformio%E9%87%8CTIVAC%E7%9A%84%E5%AE%98%E6%96%B9%E5%BA%93%E6%89%AE%E6%BC%94%E4%BA%86%E4%BB%80%E4%B9%88%E8%A7%92%E8%89%B2"><span class="toc-number">7.</span> <span class="toc-text">再来看platformio里TIVAC的官方库扮演了什么角色</span></a></li></ol></nav></aside></div><section class="p-ext"><div class="l-pager l-pager-dtl box"><a class="next" href="/blog/2021/05/04/energia%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">energia开发环境 &gt;</a></div><div id="valine-comment"><style type="text/css">.night .v[data-class=v] a { color: #0F9FB4 !important; }
+<p>昊佳直接把BUSIO_USE_FAST_PINIO给undef了。。</p>
+<p><img src="24.jpg" alt="image-20210505032903466"></p>
+<p>他说反正这个是软件spi可以不用，直接用硬件spi，所以干脆注释掉…….</p>
+<h3 id="介绍一下Adafruit的SPI相关结构"><a href="#介绍一下Adafruit的SPI相关结构" class="headerlink" title="介绍一下Adafruit的SPI相关结构"></a>介绍一下Adafruit的SPI相关结构</h3><p>BUSIO_USE_FAST_PINIO这玩意就是快速写IO口的东西，正常是慢速写IO的</p>
+<p>来看看比赛的时候我们用的Adafruit_ST7735这个库</p>
+<pre><code>  //ST7735 1.8TFT 128x160
+  #define TFT_CS        2
+  #define TFT_RST        9 // Or set to -1 and connect to Arduino RESET pin
+  #define TFT_DC         8
+
+  Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_RST);
+</code></pre>
+<p>在他的Adafruit_ST7735的cpp里面</p>
+<pre><code>// CONSTRUCTORS ************************************************************
+
+/*!
+    @brief  Instantiate Adafruit ST7735 driver with software SPI
+    @param  cs    Chip select pin #
+    @param  dc    Data/Command pin #
+    @param  mosi  SPI MOSI pin #
+    @param  sclk  SPI Clock pin #
+    @param  rst   Reset pin # (optional, pass -1 if unused)
+*/
+Adafruit_ST7735::Adafruit_ST7735(int8_t cs, int8_t dc, int8_t mosi, int8_t sclk,
+                                 int8_t rst)
+    : Adafruit_ST77xx(ST7735_TFTWIDTH_128, ST7735_TFTHEIGHT_160, cs, dc, mosi,
+                      sclk, rst) &#123;&#125;
+
+/*!
+    @brief  Instantiate Adafruit ST7735 driver with default hardware SPI
+    @param  cs   Chip select pin #
+    @param  dc   Data/Command pin #
+    @param  rst  Reset pin # (optional, pass -1 if unused)
+*/
+Adafruit_ST7735::Adafruit_ST7735(int8_t cs, int8_t dc, int8_t rst)
+    : Adafruit_ST77xx(ST7735_TFTWIDTH_128, ST7735_TFTHEIGHT_160, cs, dc, rst) &#123;&#125;
+
+#if !defined(ESP8266)
+/*!
+    @brief  Instantiate Adafruit ST7735 driver with selectable hardware SPI
+    @param  spiClass  Pointer to an SPI device to use (e.g. &amp;SPI1)
+    @param  cs        Chip select pin #
+    @param  dc        Data/Command pin #
+    @param  rst       Reset pin # (optional, pass -1 if unused)
+*/
+Adafruit_ST7735::Adafruit_ST7735(SPIClass *spiClass, int8_t cs, int8_t dc,
+                                 int8_t rst)
+    : Adafruit_ST77xx(ST7735_TFTWIDTH_128, ST7735_TFTHEIGHT_160, spiClass, cs,
+                      dc, rst) &#123;&#125;
+#endif // end !ESP8266
+</code></pre>
+<p>有软件SPI 硬件SPI 可选的硬件SPI，我们调用这个库的时候就是根据传的Adafruit_ST7735 tft = Adafruit_ST7735()参数，判定用哪个函数。</p>
+<p>就比如说这个可选的硬件SPI的函数（Adafruit_ST7735::Adafruit_ST7735(SPIClass *spiClass, int8_t cs, int8_t dc,int8_t rst)），跳转到他的引用上去看他是怎么用的。其实没有发现，但是那个Adafruit_ST7789::Adafruit_ST7789(SPIClass *spiClass, int8_t cs, int8_t dc,int8_t rst)我找到了，在这个adafruit ST7735的examples里是这样写的</p>
+<pre><code class="c">Adafruit_ST7789 tft = Adafruit_ST7789(&amp;SPI1, TFT_CS, TFT_DC, TFT_RST);
+</code></pre>
+<p>这个SPI1点进去在TIVAC官方的framework-energiativa的SPI.cpp里面这么写的</p>
+<pre><code>#if SPI_INTERFACES_COUNT &gt; 0
+  SPIClass SPI0(0);
+#endif
+#if SPI_INTERFACES_COUNT &gt; 1
+  SPIClass SPI1(1);
+#endif
+#if SPI_INTERFACES_COUNT &gt; 2
+  SPIClass SPI2(2);
+#endif
+#if SPI_INTERFACES_COUNT &gt; 3
+  SPIClass SPI3(3);
+#endif
+</code></pre>
+<p>而class SPIClass是这样的</p>
+<pre><code>class SPIClass &#123;
+
+private:
+    uint8_t SSIModule;
+    uint8_t SSIBitOrder;
+  static uint8_t inTransactionFlag;
+  static uint8_t initialized;
+  static uint8_t interruptMode; // 0=none, 1=mask, 2=global
+  static uint8_t interruptMask[NUM_PORTS]; // which interrupts to mask
+  static uint8_t interruptSave[NUM_PORTS]; // temp storage, to restore state
+public:
+
+  SPIClass(void);
+  SPIClass(uint8_t);
+  void begin(); // Default
+  void end();
+  void usingInterrupt(uint8_t interruptNumber);
+  void notUsingInterrupt(uint8_t interruptNumber);
+  void endTransaction(void);
+  void beginTransaction(SPISettings settings);
+  void setBitOrder(uint8_t);
+  void setBitOrder(uint8_t, uint8_t);
+
+  void setDataMode(uint8_t);
+
+  void setClockDivider(uint8_t);
+
+  uint8_t transfer(uint8_t);
+  uint16_t transfer16(uint16_t data);
+  void transfer(void *buf, size_t count);
+
+  //Stellarpad-specific functions
+  void setModule(uint8_t);
+
+&#125;;
+</code></pre>
+<p>这个传入的参数0123其实没什么用，就是分配了一下ID？大概说这个是第一个spi这个是第二个？，然后给我们创了相应的要开发硬件spi所需要的spiclass，就有了和其相关的函数。这样对于有多个spi的硬件，咱可以都用上，然后每个spi设置选择不同的setModule啊，用哪个中断的interruptmask啥的呀，balabalabala。</p>
+<p>不然我们想同时用两种不同方式的spi驱动tft屏幕，但是又只有一个Adafruit_ST7735::Adafruit_ST7735(int8_t cs, int8_t dc, int8_t rst)，虽然可以再创一个Adafruit_ST7735::Adafruit_ST7735类，而且可以根据cs dc rst端口，选不同的spi，但是每一个的spi的模式都是一样的，那就挺愁的。</p>
+<p>好啦这个介绍完了。</p>
+<p>然后咱们再看有什么报错吧。。。</p>
+<p><img src="25.jpg" alt="image-20210505032903466"></p>
+</div><div class="p-copyright"><blockquote><div class="p-copyright-author"><span class="p-copyright-key">帅哥请Q我：</span><span class="p-copytight-value"><a href="mailto:1973511931@qq.com">做秧歌star的钢琴</a></span></div><div class="p-copyright-link"><span class="p-copyright-key">这里是链接：</span><span class="p-copytight-value"><a href="/blog/2021/05/04/%E5%A4%A7%E7%BB%9F%E4%B8%80%E4%B9%8B%E7%94%A8vscode%E5%BC%80%E5%8F%91%E5%8D%95%E7%89%87%E6%9C%BA%E7%9A%84platformio/">https://huatingzhihoudahao.github.io/blog/2021/05/04/大统一之用vscode开发单片机的platformio/</a></span></div><div class="p-copyright-note"><span class="p-copyright-key">版权声明：</span><span class="p-copytight-value">本博客所有文章除特殊声明外，均采用<a rel="nofollow" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/"> CC BY-NC 4.0 </a>许可协议。转载请注明出处 <a href="https://huatingzhihoudahao.github.io/blog">做秧歌star的钢琴</a> </span></div></blockquote></div></article><div class="p-info box"><span class="p-tags"><i class="fa fa-tags"></i><a href="/blog/tags/vscode/">vscode</a><a href="/blog/tags/platformio/">platformio</a><a href="/blog/tags/%E5%85%A8%E5%91%98arduino/">全员arduino</a></span></div><aside id="toc"><div class="toc-title">目录</div><nav><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%88%E4%B8%8Apinmap"><span class="toc-number">1.</span> <span class="toc-text">先上pinmap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PIO%E5%88%9D%E5%BB%BA"><span class="toc-number">2.</span> <span class="toc-text">PIO初建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%88%E6%89%BE%E5%BC%95%E8%84%9A"><span class="toc-number">3.</span> <span class="toc-text">先找引脚</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-number">4.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E5%8A%A0%E4%B8%80%E4%B8%AA%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E7%9A%84%E6%97%B6%E5%80%99%EF%BC%8C%E5%BE%88%E6%9C%89%E5%8F%AF%E8%83%BD%E8%BF%98%E9%9C%80%E8%A6%81%E6%89%8B%E5%8A%A8%E5%9C%A8ini%E9%85%8D%E7%BD%AE%E9%87%8C%E5%8A%A0%E4%B8%8A%E5%85%B6%E4%BE%9D%E8%B5%96%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93"><span class="toc-number">5.</span> <span class="toc-text">在加一个第三方库的时候，很有可能还需要手动在ini配置里加上其依赖的第三方库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AC%B8%EF%BC%9F%E6%80%8E%E4%B9%88%E8%BF%98%E6%89%BE%E4%B8%8D%E5%88%B0wire-h%E5%92%8Cspi-h%EF%BC%9F%EF%BC%88%E9%9C%80%E8%A6%81%E6%89%8B%E5%8A%A8%E6%B7%BB%E5%8A%A0tiva%E5%AE%98%E6%96%B9%E5%BA%93%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">欸？怎么还找不到wire.h和spi.h？（需要手动添加tiva官方库）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%A5%E8%A7%A3%E9%87%8A%E4%B8%80%E4%B8%8Benergia%E5%AE%98%E6%96%B9%E4%B8%BA%E4%BA%86%E8%AE%A9%E6%88%91%E4%BB%AC%E8%83%BD%E6%8A%8Ativac%E5%BD%93%E6%88%90arduino%E5%BC%80%E5%8F%91%E6%8F%90%E4%BE%9B%E4%BA%86%E4%BB%80%E4%B9%88%E4%B8%9C%E8%A5%BF%E3%80%82"><span class="toc-number">7.</span> <span class="toc-text">来解释一下energia官方为了让我们能把tivac当成arduino开发提供了什么东西。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%8D%E6%9D%A5%E7%9C%8Bplatformio%E9%87%8CTIVAC%E7%9A%84%E5%AE%98%E6%96%B9%E5%BA%93%E6%89%AE%E6%BC%94%E4%BA%86%E4%BB%80%E4%B9%88%E8%A7%92%E8%89%B2"><span class="toc-number">8.</span> <span class="toc-text">再来看platformio里TIVAC的官方库扮演了什么角色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B4%E6%88%91%E6%B2%A1%E5%AE%9A%E4%B9%89BitOrder%EF%BC%8C%EF%BC%88%E9%9C%80%E8%A6%81%E6%89%8B%E5%8A%A8%E5%AE%8F%E5%AE%9A%E4%B9%89%E5%B8%A6%E4%B8%8A%E6%9D%BF%E5%AD%90%E5%9E%8B%E5%8F%B7%EF%BC%89"><span class="toc-number">9.</span> <span class="toc-text">说我没定义BitOrder，（需要手动宏定义带上板子型号）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%99%E5%9B%9E%E8%BF%99%E4%B8%AAadafruit%E7%9A%84%E5%BA%93%E8%AF%B4%E6%88%91%E4%BB%AC%E6%B2%A1%E6%9C%89SPISettings%E7%9A%84%E5%87%BD%E6%95%B0%EF%BC%88PIO%E7%9A%84tiva%E5%AE%98%E6%96%B9%E5%BA%93%E6%9B%B4%E6%96%B0%E4%B8%8D%E5%A4%9F%E5%BF%AB%EF%BC%89"><span class="toc-number">10.</span> <span class="toc-text">这回这个adafruit的库说我们没有SPISettings的函数（PIO的tiva官方库更新不够快）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8BAdafruit%E7%9A%84SPI%E7%9B%B8%E5%85%B3%E7%BB%93%E6%9E%84"><span class="toc-number">11.</span> <span class="toc-text">介绍一下Adafruit的SPI相关结构</span></a></li></ol></nav></aside></div><section class="p-ext"><div class="l-pager l-pager-dtl box"><a class="next" href="/blog/2021/05/04/energia%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">energia开发环境 &gt;</a></div><div id="valine-comment"><style type="text/css">.night .v[data-class=v] a { color: #0F9FB4 !important; }
 .night .v[data-class=v] a:hover { color: #216C73 !important; }
 .night .v[data-class=v] li { list-style: inherit; }
 .night .v[data-class=v] .vwrap { border: 1px solid #223441; border-radius: 0; }
