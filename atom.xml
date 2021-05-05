@@ -46,11 +46,11 @@
   </entry>
   
   <entry>
-    <title>energia开发环境</title>
+    <title>energia开发环境(TIVAC)</title>
     <link href="https://huatingzhihoudahao.github.io/blog/2021/05/04/energia%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/"/>
     <id>https://huatingzhihoudahao.github.io/blog/2021/05/04/energia%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</id>
     <published>2021-05-03T19:34:07.000Z</published>
-    <updated>2021-05-05T15:24:21.057Z</updated>
+    <updated>2021-05-05T20:40:13.760Z</updated>
     
     <content type="html"><![CDATA[<p>这回用的TIVAC，直接烧录是烧录不进去的，会发现设备根本没有配置好，需要手动安装驱动，驱动去TI官网找</p><p><a href="https://www.ti.com.cn/tool/cn/STELLARIS_ICDI_DRIVERS#supp-products-hw-dl">https://www.ti.com.cn/tool/cn/STELLARIS_ICDI_DRIVERS#supp-products-hw-dl</a></p><p>先去energia官网下个pinmap</p><p><img src="2.jpg" alt="image-20210504033843670"></p><p>这回主要是讲怎么energia开发</p><p>它可以支持TI家基本所有的板子，而且不必读寄存器或者看库函数，直接arduino开发，但是没有断点，以及库其实没有那么全备，很多都是一些冷门的外设的库，（或许不是冷门只是我孤陋寡闻？）</p><p>下载energia</p><p><a href="https://energia.nu/download/">https://energia.nu/download/</a></p><p>点工具-&gt; 开发板管理器-&gt;下载想要的板子  </p><p><img src="1.jpg" alt="image-20210504033843670"></p><p>然后工具-&gt;开发板-&gt;选中自己的板子</p><p>然后文件 示例 选自己想要的模板开始开发吧  右上角是串口显示，这里没法断点调试</p><p>效果</p><p><img src="3.jpg" alt="image-20210504033843670"></p><p>energia官网有函数。<a href="https://energia.nu/reference/">https://energia.nu/reference/</a>  基本等于arduino开发，就是得对着pinmap看引脚，有的时候为了库通用，给出来的不一定能用</p><p>点文件首选项把编译和上传的详细输出开上可以看到很多详细的信息。</p><h3 id="对应多个库的问题"><a href="#对应多个库的问题" class="headerlink" title="对应多个库的问题"></a>对应多个库的问题</h3><p><img src="4.jpg" alt="image-20210504033843670"></p><p>em其实不用管的，把首选项的编译和上传的详细输出关掉就看不见了其实  &lt;-__&lt;-  其实我也没发现tivac的哪多了个wire.h。我用spi库的时候，说我有多个，我确实在不同的地方都看到有spi.h。哈反正不用管也行啦，他自己会说自己选哪个用了，能编译过就行。</p>]]></content>
     
