@@ -6,7 +6,7 @@
   <link href="https://huatingzhihoudahao.github.io/blog/atom.xml" rel="self"/>
   
   <link href="https://huatingzhihoudahao.github.io/blog/"/>
-  <updated>2021-05-05T20:35:35.515Z</updated>
+  <updated>2021-05-07T11:06:07.591Z</updated>
   <id>https://huatingzhihoudahao.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ros主从机配置</title>
+    <link href="https://huatingzhihoudahao.github.io/blog/2021/05/07/ros%E4%B8%BB%E4%BB%8E%E6%9C%BA%E9%85%8D%E7%BD%AE/"/>
+    <id>https://huatingzhihoudahao.github.io/blog/2021/05/07/ros%E4%B8%BB%E4%BB%8E%E6%9C%BA%E9%85%8D%E7%BD%AE/</id>
+    <published>2021-05-07T10:53:23.000Z</published>
+    <updated>2021-05-07T11:06:07.591Z</updated>
+    
+    <content type="html"><![CDATA[<p>master就是主机，主机启动roscore 之后从机就连的主机的roscore，一般配好了之后两边都能互相收到节点和话题，如果出现节点图有红的，那就是没配好的。</p><h3 id="bashrc"><a href="#bashrc" class="headerlink" title=".bashrc"></a>.bashrc</h3><p>车：vscode打开.bashrc 添加<br>export ROS_HOSTNAME=sz-Default-string       # 小车电脑名，在小车终端底下hostname就行<br>export ROS_MASTER_URI=<a href="http://192.168.5.101:11311/">http://192.168.5.101:11311</a>    # http://小车电脑IP:11311，在小车终端底下ifconfig看一下</p><p>pc：vscode打开.bashrc （zsh的开zshrc） 添加<br>export ROS_HOSTNAME=bender巴拉巴拉巴拉    # PC电脑名，在pc终端底下hostname放进去<br>export ROS_MASTER_URI=<a href="http://192.168.5.101:11311/">http://192.168.5.101:11311</a>      # http://小车电脑IP:11311在小车终端底下ifconfig看一下<br>export ROS_IP=”192.168.5.xxxxx”                 #在自己电脑的终端底下ifconfig看一下</p><h3 id="hosts"><a href="#hosts" class="headerlink" title="hosts"></a>hosts</h3><p>车：车的终端底下，sudo nano /etc/hosts   添加<br>192.168.5.101    sz-Default-string                 #　小车IP（在小车终端底下ifconfig看一下）　小车名（在小车终端底下hostname看一下）<br>192.168.5.xxxxx    bender巴拉巴拉巴拉        #  PC_IP（在PC终端底下ifconfig看一下）  PC名（在PC终端底下ifconfig看一下）</p><p>pc:打开etc目录下的hosts文件 添加<br>192.168.5.101    sz-Default-string                 #　小车IP（在小车终端底下ifconfig看一下）　小车名（在小车终端底下hostname看一下）<br>192.168.5.xxxxx    bender巴拉巴拉巴拉        #  PC_IP（在PC终端底下ifconfig看一下）  PC名（在PC终端底下ifconfig看一下）</p><h3 id="rosapp的图像显示问题"><a href="#rosapp的图像显示问题" class="headerlink" title="rosapp的图像显示问题"></a>rosapp的图像显示问题</h3><p>之前有个课设用rosapp，手机上可以控制cmdvel，但是收不到图像，配置也是跟之前配主从机一样，如果没记错的话好像是因为我们之前用的是hostname是那种自己电脑字符那样的benderbalabla，然后hosts里设置解析了一下这个bender是192.168.balabalabala….后来我们改成hostname直接写这个域名而不是字符，就省去解析这个过程，好使了。。虽然不太知道原理。。有人说可能是动静态ip的问题？</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;master就是主机，主机启动roscore 之后从机就连的主机的roscore，一般配好了之后两边都能互相收到节点和话题，如果出现节点图有红的，那就是没配好的。&lt;/p&gt;
+&lt;h3 id=&quot;bashrc&quot;&gt;&lt;a href=&quot;#bashrc&quot; class=&quot;headerlink</summary>
+      
+    
+    
+    
+    <category term="ROS - ros - 主从机配置" scheme="https://huatingzhihoudahao.github.io/blog/categories/ROS-ros-%E4%B8%BB%E4%BB%8E%E6%9C%BA%E9%85%8D%E7%BD%AE/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>大统一之用vscode开发单片机的platformio(tft屏幕spi显示)</title>
