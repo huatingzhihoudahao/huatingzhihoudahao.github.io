@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://huatingzhihoudahao.github.io/blog/reference/index.html</loc>
+    
+    <lastmod>2021-05-07</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://huatingzhihoudahao.github.io/blog/2021/05/04/energia%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</loc>
     
     <lastmod>2021-05-05</lastmod>
@@ -38,13 +45,6 @@
   
   <url>
     <loc>https://huatingzhihoudahao.github.io/blog/2021/05/03/msp430g2%E4%B9%8BIO%E5%92%8C%E5%85%B6IO%E5%A4%96%E9%83%A8%E4%B8%AD%E6%96%AD/</loc>
-    
-    <lastmod>2021-05-03</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://huatingzhihoudahao.github.io/blog/reference/index.html</loc>
     
     <lastmod>2021-05-03</lastmod>
     
@@ -88,7 +88,7 @@
 
   <url>
     <loc>https://huatingzhihoudahao.github.io/blog</loc>
-    <lastmod>2021-05-05</lastmod>
+    <lastmod>2021-05-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -96,112 +96,112 @@
   
   <url>
     <loc>https://huatingzhihoudahao.github.io/blog/tags/energia/</loc>
-    <lastmod>2021-05-05</lastmod>
+    <lastmod>2021-05-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://huatingzhihoudahao.github.io/blog/tags/ccs/</loc>
-    <lastmod>2021-05-05</lastmod>
+    <lastmod>2021-05-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://huatingzhihoudahao.github.io/blog/tags/IO%E5%A4%96%E9%83%A8%E4%B8%AD%E6%96%AD/</loc>
-    <lastmod>2021-05-05</lastmod>
+    <lastmod>2021-05-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://huatingzhihoudahao.github.io/blog/tags/msp430g2/</loc>
-    <lastmod>2021-05-05</lastmod>
+    <lastmod>2021-05-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://huatingzhihoudahao.github.io/blog/tags/GPIO/</loc>
-    <lastmod>2021-05-05</lastmod>
+    <lastmod>2021-05-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://huatingzhihoudahao.github.io/blog/tags/hexo%E6%8C%87%E4%BB%A4/</loc>
-    <lastmod>2021-05-05</lastmod>
+    <lastmod>2021-05-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://huatingzhihoudahao.github.io/blog/tags/uart%E9%80%9A%E4%BF%A1/</loc>
-    <lastmod>2021-05-05</lastmod>
+    <lastmod>2021-05-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://huatingzhihoudahao.github.io/blog/tags/ADC/</loc>
-    <lastmod>2021-05-05</lastmod>
+    <lastmod>2021-05-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://huatingzhihoudahao.github.io/blog/tags/UsartGPU/</loc>
-    <lastmod>2021-05-05</lastmod>
+    <lastmod>2021-05-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://huatingzhihoudahao.github.io/blog/tags/Timer-A%E4%B8%AD%E6%96%AD/</loc>
-    <lastmod>2021-05-05</lastmod>
+    <lastmod>2021-05-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://huatingzhihoudahao.github.io/blog/tags/%E6%8D%95%E8%8E%B7/</loc>
-    <lastmod>2021-05-05</lastmod>
+    <lastmod>2021-05-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://huatingzhihoudahao.github.io/blog/tags/ccs-cloud/</loc>
-    <lastmod>2021-05-05</lastmod>
+    <lastmod>2021-05-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://huatingzhihoudahao.github.io/blog/tags/hexo%E6%90%AD%E5%BB%BA%E4%B8%AD%E7%9A%84bug/</loc>
-    <lastmod>2021-05-05</lastmod>
+    <lastmod>2021-05-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://huatingzhihoudahao.github.io/blog/tags/vscode/</loc>
-    <lastmod>2021-05-05</lastmod>
+    <lastmod>2021-05-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://huatingzhihoudahao.github.io/blog/tags/platformio/</loc>
-    <lastmod>2021-05-05</lastmod>
+    <lastmod>2021-05-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://huatingzhihoudahao.github.io/blog/tags/%E5%85%A8%E5%91%98arduino/</loc>
-    <lastmod>2021-05-05</lastmod>
+    <lastmod>2021-05-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -210,21 +210,21 @@
   
   <url>
     <loc>https://huatingzhihoudahao.github.io/blog/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</loc>
-    <lastmod>2021-05-05</lastmod>
+    <lastmod>2021-05-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://huatingzhihoudahao.github.io/blog/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/</loc>
-    <lastmod>2021-05-05</lastmod>
+    <lastmod>2021-05-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://huatingzhihoudahao.github.io/blog/categories/hexo/</loc>
-    <lastmod>2021-05-05</lastmod>
+    <lastmod>2021-05-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
