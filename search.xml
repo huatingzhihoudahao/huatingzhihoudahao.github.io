@@ -13,10 +13,18 @@
       
       <categories>
           
-          <category> ROS - ros - 主从机配置 </category>
+          <category> ROS </category>
           
       </categories>
       
+      
+        <tags>
+            
+            <tag> ros </tag>
+            
+            <tag> 主从机配置 </tag>
+            
+        </tags>
       
     </entry>
     
