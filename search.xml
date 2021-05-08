@@ -4,6 +4,81 @@
   
     
     <entry>
+      <title>用python替换图片的背景颜色</title>
+      <link href="/blog/2021/05/08/%E7%94%A8python%E6%9B%BF%E6%8D%A2%E5%9B%BE%E7%89%87%E7%9A%84%E8%83%8C%E6%99%AF%E9%A2%9C%E8%89%B2/"/>
+      <url>/blog/2021/05/08/%E7%94%A8python%E6%9B%BF%E6%8D%A2%E5%9B%BE%E7%89%87%E7%9A%84%E8%83%8C%E6%99%AF%E9%A2%9C%E8%89%B2/</url>
+      
+        <content type="html"><![CDATA[<p>上课讲opencv基本操作顺便整理一下这个</p><p>写论文换背景颜色用这个比较方便</p><pre><code class="c">from PIL import Imageimport osclass ChangeImageColor(object):  @classmethod  def startHandle(self, rgb):    # 获取当前路径，并创建新目录用于输出结果image    path = os.getcwd() + &#39;/images/res&#39;    npath = os.getcwd() + &#39;/images/res/result/&#39;    if not os.path.exists(npath):      os.makedirs(npath)    else:      # 如果存在相同新目录那么删除下面文件      for root, dirs, files in os.walk(npath):        for file_name in files:          os.remove(npath + file_name)        # 新颜色值    nr,ng,nb = rgb    # 存放背景颜色    br,bg,bb, ba = 255, 255, 255, 0    # 遍历目录    for root, dirs, files in os.walk(path):      print(&#39;root: &#39;, root) # 当前目录路径      print(&#39;dirs: &#39;, dirs) # 当前路径下所有子目录      print(&#39;files: &#39;, files) # 当前路径下所有非目录子文件            # 遍历下所有图片文件      for file_name in files:        if file_name != &#39;.DS_Store&#39;:          image = Image.open(root + &#39;/&#39; + file_name)          image=image.convert(&quot;RGB&quot;)         # print(image.mode)          #print(image.getpixel((0,0)))          if image is not None:            image_width, image_height = image.size            # 遍历Image每个像素            for i in range(image_width):              for j in range(image_height):                xy = (i,j)                #print(xy)                # 下面是获取像素和比较像素                color = image.getpixel(xy)               # print(image.getpixel(xy))                color_num = len(color)                #print(color_num)                # 判断颜色是否有alpha值                if color_num == 4:                  r, g, b, a = color                  if i == 0 and j == 0:                    br, bg, bb, ba = color                  if br != r or bg != g or bb != b:                    # 替换像素并保留alpha值                    image.putpixel(xy, (nr, ng, nb,a))                elif color_num == 3:                  #print(color)                  r, g, b = color                  if i == 0 and j == 0:                    br, bg, bb = color                  if br == r or bg == g or bb == b:            # 替换alpha值                                image.putpixel(xy, (nr, ng, nb))             image.save(npath + file_name)  # 把16进制转换为rgb  @classmethod  def hex2rgb(self, hexcolor):    rgb = ((hexcolor &gt;&gt; 16) &amp; 0xff,        (hexcolor &gt;&gt; 8) &amp; 0xff,        hexcolor &amp; 0xff        )    return rgbif __name__ == &#39;__main__&#39;:  hexColor = int(input(&#39;请输入新16进制颜色值:&#39;), 16)  ChangeImageColor.startHandle(ChangeImageColor.hex2rgb(hexColor))</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> python小工具 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>ros下opencv基础操作</title>
+      <link href="/blog/2021/05/08/opencv%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/"/>
+      <url>/blog/2021/05/08/opencv%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/</url>
+      
+        <content type="html"><![CDATA[<p>上课讲到这个，刚好整理一下opencv基本函数，具体函数参数百度，此处只做简单罗列。</p><p>2020年视觉避障代码在末尾链接处。</p><h3 id="图像载入、显示和输出"><a href="#图像载入、显示和输出" class="headerlink" title="图像载入、显示和输出"></a>图像载入、显示和输出</h3><p>using namespace cv;</p><p>imread()<br>imshow()<br>imwrite()   </p><pre><code class="python">cv2.namedWindows(&quot;image&quot;)cv2.imshow(&quot;image&quot;,image)cv2.waitkey()//（）里是毫秒，等待键入之后关闭这个图像显示窗口</code></pre><h3 id="图像灰度空间-hsv-bgr-转换"><a href="#图像灰度空间-hsv-bgr-转换" class="headerlink" title="图像灰度空间/hsv/bgr  转换"></a>图像灰度空间/hsv/bgr  转换</h3><p>cvtColor() </p><pre><code class="python">hsv=cv2.cvtColor(blur,cv2.COLOR_BGR2HSV)h,s,v=cv2.split(hsv)</code></pre><h3 id="图像通过阈值分割二值化"><a href="#图像通过阈值分割二值化" class="headerlink" title="图像通过阈值分割二值化"></a>图像通过阈值分割二值化</h3><p>double threshold(InputArray src, OutputArray dst, double thresh, double maxval, int type)</p><pre><code class="python">ret,clear_obstacle_by_h_threshold=cv2.threshold(h,145,255,cv2.THRESH_BINARY_INV)</code></pre><h3 id="图像滤波去噪"><a href="#图像滤波去噪" class="headerlink" title="图像滤波去噪"></a>图像滤波去噪</h3><p>几种常见的线性滤波器</p><p>●允许低频率通过的低通滤波器。</p><p>●允许高频率通过的高通滤波器。</p><p>●允许一定范围频率通过的带通滤波器。</p><p>●阻止一定范围频率通过并且允许其它频率通过的带阻滤波器</p><p>滤波与模糊</p><p>滤波可分低通滤波和高通滤波两种。如高斯滤波是指用高斯函数作为滤波函数的滤波操作，至于是不是模糊，要看是高斯低通滤波还是高斯高通滤波，低通滤波就是模糊操作，高通滤波就是锐化操作。</p><p>高斯滤波函数：GaussianBlur()   (模板确定的邻域内加权平均灰度值代替中心点像素)</p><pre><code class="python">blur=cv2.GaussianBlur(image,(5,5),0)</code></pre><h3 id="图像腐蚀膨胀"><a href="#图像腐蚀膨胀" class="headerlink" title="图像腐蚀膨胀"></a>图像腐蚀膨胀</h3><p>膨胀和腐蚀的主要功能如下：</p><ol><li><p>消除噪声</p></li><li><p>分割出独立的图像元素，在图像中连接相邻的元素</p></li><li><p>寻找图像中的明显的极大值或极小值区域</p></li><li><p>求出图像的梯度</p></li></ol><p>膨胀和腐蚀针对于图像的亮部区域，膨胀指亮部区域向外膨胀，腐蚀指的是腐蚀掉亮部区域。</p><p>膨胀(dilate)：求局部最大值（图像与核进行卷积）</p><p>核可以是任何形状核大小，它拥有一个单独定义出来的参考点，称为锚点，可以把核视为模板或者掩码</p><p>膨胀函数dilate</p><pre><code>kernel_1=np.ones((5,5),np.uint8)dst=cv2.dilate(image,kernel_1,2)</code></pre><p>腐蚀(erode)：与膨胀相反，求局部最小值（图像与核进行卷积）</p><p>腐蚀函数erode</p><pre><code>kernel_2=np.ones((5,5),np.uint8)allmask=cv2.erode(allmask,kernel_2,2)</code></pre><p>开运算（Opening Operation），先腐蚀后膨胀的过程</p><p>闭运算（Closing Operation），先膨胀后腐蚀的过程</p><h3 id="图像轮廓检测"><a href="#图像轮廓检测" class="headerlink" title="图像轮廓检测"></a>图像轮廓检测</h3><p>findContours() 函数：检测物体的轮廓</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> opencv </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> opencv </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>配置windows下的vscode的opencv</title>
+      <link href="/blog/2021/05/08/%E9%85%8D%E7%BD%AEwindows%E4%B8%8B%E7%9A%84vscode%E7%9A%84opencv/"/>
+      <url>/blog/2021/05/08/%E9%85%8D%E7%BD%AEwindows%E4%B8%8B%E7%9A%84vscode%E7%9A%84opencv/</url>
+      
+        <content type="html"><![CDATA[<p>今天上课老师给的代码是win底下的opencv代码，所以给win安一下opencv</p><p>但我又不想用vs studio，所以还是vscode！</p><p>参考博客<a href="https://blog.csdn.net/zhaiax672/article/details/88971248">https://blog.csdn.net/zhaiax672/article/details/88971248</a></p><h3 id="配置MINGW"><a href="#配置MINGW" class="headerlink" title="配置MINGW"></a>配置MINGW</h3><p>我surface虽然安ruby的时候安了mingw，但是加了对应的环境变量后 gcc –version还是没反应。所以又去单独下了mingw，中途选配置的时候架构选x86架构，安在以下路径。</p><pre><code>C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin</code></pre><p>此电脑属性高级属性环境变量添加上面的路径。关闭终端再打开 写入gcc –version，有反应即可。</p><h3 id="配置cmake"><a href="#配置cmake" class="headerlink" title="配置cmake"></a>配置cmake</h3><p>单独下载cmake解压，配置系统环境变量路径如下</p><pre><code>C:\Users\19735\cmake-3.20.2-windows-x86_64\bin</code></pre><p>将 <code>opencv-3.4.5-vc14_vc15.exe</code> 解压</p><p>在 <code>opencv\build\x64</code> 路径下新建一个 文件夹（可自起，这里是 <code>MinGW</code> ）</p><p>运行 <code>cmake-3.9.0-rc3-win64-x64\bin\cmake-gui.exe</code></p><p><code>where is the source code:</code> 选择opencv路径的sources</p><p><code>where to build the binaries:</code> 选择opencv路径的build的x64的mingw</p><p>点configure，选择如下</p><p><img src="1.jpg" alt="G2"></p><p>选择 MinGW 中的 C 和 C++ 编译的exe程序</p><p>我的路径： <code>C:\Program Files\mingw-w64\x86_64-5.3.0-posix-seh-rt_v4-rev0\mingw64\bin</code></p><p>C：<code>gcc.exe</code><br>C++ : <code>g++.exe</code></p><p>设置完毕点击 <strong>Finish</strong>，耐心等待进度条读完，直到输出窗口看到 <strong>Configuring done</strong>。再次点击 <strong>Configure</strong> 等待进度条读完。之后点击<strong>Generate</strong> 等待进度条读完，出现 <strong>Generating done</strong>。</p><p>这时，可以看到 opencv\build\x64\MinGW 的文件夹下新增了好多东西。</p><p>在dos框（windows power shell 也可以）里，利用 cd 命令 切换到opencv\build\x64\MinGW，输入 minGW32-make 命令</p><h3 id="出现error-invalid-register-for-seh-savexmm"><a href="#出现error-invalid-register-for-seh-savexmm" class="headerlink" title="出现error  invalid register for .seh_savexmm"></a>出现error  invalid register for .seh_savexmm</h3><pre><code>Error 1 invalid register for .seh_savexmm</code></pre><p>打开cmake-3.9.0-rc3-win64-x64\bin\cmake-gui.exe，search：cpu_di     CPU_DISPATCH 应该使用AVX2</p><p>然后重复之前configurate  generate的操作</p><p>编译时间15：36-17.18。。。。。。。。。。。。。。</p><p>编译完成之后，输入 minGW32-make install 来完成装载。<br>  <br>最后，配置环境变量 path ： </p><pre><code>C:\Users\19735\Documents\opencv\opencv\build\x64\MinGW\bin</code></pre><h3 id="项目配置"><a href="#项目配置" class="headerlink" title="项目配置"></a>项目配置</h3><p>launch.json     <code>&quot;miDebuggerPath&quot;</code> 改成自己的。</p><pre><code class="json">&#123;    // Use IntelliSense to learn about possible attributes.    // Hover to view descriptions of existing attributes.    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387    &quot;version&quot;: &quot;0.2.0&quot;,    &quot;configurations&quot;: [                &#123;            &quot;name&quot;: &quot;(gdb) Launch&quot;,            &quot;type&quot;: &quot;cppdbg&quot;,            &quot;request&quot;: &quot;launch&quot;,            &quot;program&quot;: &quot;$&#123;workspaceFolder&#125;/$&#123;fileBasenameNoExtension&#125;.o&quot;,            &quot;args&quot;: [],            &quot;stopAtEntry&quot;: false,            &quot;cwd&quot;: &quot;$&#123;workspaceFolder&#125;&quot;,            &quot;environment&quot;: [],            &quot;externalConsole&quot;: true,            &quot;MIMode&quot;: &quot;gdb&quot;,            &quot;miDebuggerPath&quot;: &quot;C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/gdb.exe&quot;,            &quot;preLaunchTask&quot;: &quot;g++&quot;,            &quot;setupCommands&quot;: [                &#123;                    &quot;description&quot;: &quot;Enable pretty-printing for gdb&quot;,                    &quot;text&quot;: &quot;-enable-pretty-printing&quot;,                    &quot;ignoreFailures&quot;: true                &#125;            ]        &#125;,    ]&#125;</code></pre><p>tasks.json    修改 “-I” 和 “-L” 的路径。   ”-l“的路径去-L底下找自己下载的版本号</p><pre><code class="json">&#123;    // See https://go.microsoft.com/fwlink/?LinkId=733558    // for the documentation about the tasks.json format    &quot;version&quot;: &quot;2.0.0&quot;,   // &quot;label&quot;: &quot;g++&quot;,    &quot;command&quot;: &quot;g++&quot;,    &quot;args&quot;: [        &quot;-g&quot;,         &quot;-std=c++11&quot;,         &quot;$&#123;file&#125;&quot;,         &quot;-o&quot;,         &quot;$&#123;fileBasenameNoExtension&#125;.o&quot;,          &quot;-I&quot;, &quot;C:\\Users\\19735\\Documents\\opencv\\opencv\\build\\include&quot;,        &quot;-I&quot;, &quot;C:\\Users\\19735\\Documents\\opencv\\opencv\\build\\include\\opencv2&quot;,        &quot;-I&quot;, &quot;C:/Users/19735/Documents/opencv/opencv/build/include/opencv2&quot;,        &quot;-I&quot;, &quot;C:\\Users\\19735\\Documents\\opencv\\opencv\\build\\include\\opencv&quot;,        &quot;-L&quot;, &quot;C:\\Users\\19735\\Documents\\opencv\\opencv\\build\\x64\\MinGW\\lib&quot;,        &quot;-l&quot;, &quot;opencv_core341&quot;,        &quot;-l&quot;, &quot;opencv_imgproc341&quot;,        &quot;-l&quot;, &quot;opencv_imgcodecs341&quot;,        &quot;-l&quot;, &quot;opencv_video341&quot;,        &quot;-l&quot;, &quot;opencv_ml341&quot;,        &quot;-l&quot;, &quot;opencv_highgui341&quot;,        &quot;-l&quot;, &quot;opencv_objdetect341&quot;,        &quot;-l&quot;, &quot;opencv_flann341&quot;,        &quot;-l&quot;, &quot;opencv_imgcodecs341&quot;,        &quot;-l&quot;, &quot;opencv_photo341&quot;,        &quot;-l&quot;, &quot;opencv_videoio341&quot;      ],// 编译命令参数    &quot;problemMatcher&quot;:&#123;        &quot;owner&quot;: &quot;cpp&quot;,        &quot;fileLocation&quot;:[            &quot;relative&quot;,            &quot;$&#123;workspaceFolder&#125;&quot;        ],        &quot;pattern&quot;:[            &#123;                &quot;regexp&quot;: &quot;^([^\\\\s].*)\\\\((\\\\d+,\\\\d+)\\\\):\\\\s*(.*)$&quot;,                &quot;file&quot;: 1,                &quot;location&quot;: 2,                &quot;message&quot;: 3            &#125;        ]    &#125;,    &quot;group&quot;: &#123;        &quot;kind&quot;: &quot;build&quot;,        &quot;isDefault&quot;: true    &#125;  &#125;</code></pre><p>新建一个c_cpp_properties.json   <code>includePath</code>的路径为自己的，<code>compilerPath</code> 同理。</p><pre><code class="json">&#123;    &quot;configurations&quot;: [        &#123;            &quot;name&quot;: &quot;win&quot;,            &quot;includePath&quot;: [                &quot;$&#123;workspaceFolder&#125;/**&quot;,                &quot;C:/Users/19735/Documents/opencv/opencv/build/include/opencv2&quot;,                &quot;C:\\Users\\19735\\Documents\\opencv\\opencv\\build\\include&quot;,                &quot;C:\\Users\\19735\\Documents\\opencv\\opencv\\build\\include\\opencv2&quot;,                &quot;C:\\Users\\19735\\Documents\\opencv\\opencv\\build\\include\\opencv&quot;                            ],            &quot;defines&quot;: [],            &quot;compilerPath&quot;: &quot;C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/gdb.exe&quot;,            &quot;cStandard&quot;: &quot;c11&quot;,            &quot;cppStandard&quot;: &quot;c++17&quot;,            &quot;intelliSenseMode&quot;: &quot;clang-x64&quot;        &#125;    ],    &quot;version&quot;: 4&#125;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> opencv </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> opencv配置 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>ros主从机配置</title>
       <link href="/blog/2021/05/07/ros%E4%B8%BB%E4%BB%8E%E6%9C%BA%E9%85%8D%E7%BD%AE/"/>
       <url>/blog/2021/05/07/ros%E4%B8%BB%E4%BB%8E%E6%9C%BA%E9%85%8D%E7%BD%AE/</url>

@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><meta name="theme-color" content="#2d4356"><meta name="baidu-site-verification"><title>配置windows下的vscode的opencv | 我要做秧歌star的钢琴！</title><link rel="stylesheet" type="text/css" href="/blog/css/style.css"><link rel="Shortcut Icon" type="image/x-icon" href="/blog/favicon.png"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/blog/atom.xml" title="我要做秧歌star的钢琴！" type="application/atom+xml">
+</head><link rel="stylesheet" type="text/css" href="/blog/plugins/highlight/atom-one-dark.min.css"><script type="text/javascript" src="/blog/plugins/highlight/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();
+</script><script type="text/javascript" src="/blog/js/ready.js" async></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"><body class="night"><div class="mobile-head" id="mobile-head"><div class="navbar-icon"><span></span><span></span><span></span></div><div class="navbar-title"><a href="/">GIOGIO</a></div><div class="navbar-search"><!--= show a circle here--></div></div><div class="h-wrapper" id="menu"><nav class="h-head box"><div class="m-hdimg"><a class="hdimg img" href="/blog/"><img class="nofancybox" src="https://huatingzhihoudahao.github.io/blog/img/profile.jpg" width="128" height="128"><!--img(crossOrigin="Anonymous" src="https://github.com/huatingzhihoudahao/blog/tree/gh-pages/img/profile.jpg" class="nofancybox" width="128" height="128")--></a><h1 class="ttl"><a href="/blog/">我要做秧歌star的钢琴！</a></h1></div><p class="m-desc">我乔鲁诺乔巴纳有一个梦想，那就是成为秧歌star！</p><div class="m-nav"><ul><li><span class="dot">●</span><a href="/blog/archives/">归档</a></li><li><span class="dot">●</span><a href="/blog/categories/">分类</a></li><li><span class="dot">●</span><a href="/blog/tags/">标签</a></li><li><span class="dot">●</span><a href="/blog/about/">关于</a></li><li><span class="dot">●</span><a href="/blog/reference/">参考书</a></li><li><span class="dot">●</span><a href="/blog/atom.xml">RSS</a></li><li class="m-sch"><form class="form" id="j-formsch" method="get"><input class="txt" type="text" id="local-search-input" name="q" value="搜索" onfocus="if(this.value=='搜索'){this.value='';}" onblur="if(this.value==''){this.value='搜索';}"><input type="text" style="display:none;"></form></li></ul><div id="local-search-result"></div></div></nav></div><div id="back2Top"><a class="fa fa-arrow-up" title="Back to top" href="#"></a></div><div class="box" id="container"><div class="l-wrapper"><div class="l-content box"><div class="l-post l-post-art"><article class="p-art"><div class="p-header box"><h1 class="p-title">配置windows下的vscode的opencv</h1><div class="p-info"><span class="p-date"><i class="fa fa-calendar"></i><a href="/blog/2021/05/08/%E9%85%8D%E7%BD%AEwindows%E4%B8%8B%E7%9A%84vscode%E7%9A%84opencv/">2021-05-08</a></span><span class="p-category"><i class="fa fa-folder"></i><a href="/blog/categories/opencv/">opencv</a></span><span class="p-view" id="busuanzi_container_page_pv"><i class="fa fa-eye"></i><span id="busuanzi_value_page_pv"></span></span></div></div><div class="p-content"><p>今天上课老师给的代码是win底下的opencv代码，所以给win安一下opencv</p>
+<p>但我又不想用vs studio，所以还是vscode！</p>
+<p>参考博客<a target="_blank" rel="noopener" href="https://blog.csdn.net/zhaiax672/article/details/88971248">https://blog.csdn.net/zhaiax672/article/details/88971248</a></p>
+<h3 id="配置MINGW"><a href="#配置MINGW" class="headerlink" title="配置MINGW"></a>配置MINGW</h3><p>我surface虽然安ruby的时候安了mingw，但是加了对应的环境变量后 gcc –version还是没反应。所以又去单独下了mingw，中途选配置的时候架构选x86架构，安在以下路径。</p>
+<pre><code>C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin
+</code></pre>
+<p>此电脑属性高级属性环境变量添加上面的路径。关闭终端再打开 写入gcc –version，有反应即可。</p>
+<h3 id="配置cmake"><a href="#配置cmake" class="headerlink" title="配置cmake"></a>配置cmake</h3><p>单独下载cmake解压，配置系统环境变量路径如下</p>
+<pre><code>C:\Users\19735\cmake-3.20.2-windows-x86_64\bin
+</code></pre>
+<p>将 <code>opencv-3.4.5-vc14_vc15.exe</code> 解压</p>
+<p>在 <code>opencv\build\x64</code> 路径下新建一个 文件夹（可自起，这里是 <code>MinGW</code> ）</p>
+<p>运行 <code>cmake-3.9.0-rc3-win64-x64\bin\cmake-gui.exe</code></p>
+<p><code>where is the source code:</code> 选择opencv路径的sources</p>
+<p><code>where to build the binaries:</code> 选择opencv路径的build的x64的mingw</p>
+<p>点configure，选择如下</p>
+<p><img src="1.jpg" alt="G2"></p>
+<p>选择 MinGW 中的 C 和 C++ 编译的exe程序</p>
+<p>我的路径： <code>C:\Program Files\mingw-w64\x86_64-5.3.0-posix-seh-rt_v4-rev0\mingw64\bin</code></p>
+<p>C：<code>gcc.exe</code><br>C++ : <code>g++.exe</code></p>
+<p>设置完毕点击 <strong>Finish</strong>，耐心等待进度条读完，直到输出窗口看到 <strong>Configuring done</strong>。再次点击 <strong>Configure</strong> 等待进度条读完。之后点击<strong>Generate</strong> 等待进度条读完，出现 <strong>Generating done</strong>。</p>
+<p>这时，可以看到 opencv\build\x64\MinGW 的文件夹下新增了好多东西。</p>
+<p>在dos框（windows power shell 也可以）里，利用 cd 命令 切换到opencv\build\x64\MinGW，输入 minGW32-make 命令</p>
+<h3 id="出现error-invalid-register-for-seh-savexmm"><a href="#出现error-invalid-register-for-seh-savexmm" class="headerlink" title="出现error  invalid register for .seh_savexmm"></a>出现error  invalid register for .seh_savexmm</h3><pre><code>Error 1 invalid register for .seh_savexmm
+</code></pre>
+<p>打开cmake-3.9.0-rc3-win64-x64\bin\cmake-gui.exe，search：cpu_di     CPU_DISPATCH 应该使用AVX2</p>
+<p>然后重复之前configurate  generate的操作</p>
+<p>编译时间15：36-17.18。。。。。。。。。。。。。。</p>
+<p>编译完成之后，输入 minGW32-make install 来完成装载。<br>  <br>最后，配置环境变量 path ： </p>
+<pre><code>C:\Users\19735\Documents\opencv\opencv\build\x64\MinGW\bin
+</code></pre>
+<h3 id="项目配置"><a href="#项目配置" class="headerlink" title="项目配置"></a>项目配置</h3><p>launch.json     <code>&quot;miDebuggerPath&quot;</code> 改成自己的。</p>
+<pre><code class="json">&#123;
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    &quot;version&quot;: &quot;0.2.0&quot;,
+    &quot;configurations&quot;: [
+        
+        &#123;
+            &quot;name&quot;: &quot;(gdb) Launch&quot;,
+            &quot;type&quot;: &quot;cppdbg&quot;,
+            &quot;request&quot;: &quot;launch&quot;,
+            &quot;program&quot;: &quot;$&#123;workspaceFolder&#125;/$&#123;fileBasenameNoExtension&#125;.o&quot;,
+            &quot;args&quot;: [],
+            &quot;stopAtEntry&quot;: false,
+            &quot;cwd&quot;: &quot;$&#123;workspaceFolder&#125;&quot;,
+            &quot;environment&quot;: [],
+            &quot;externalConsole&quot;: true,
+            &quot;MIMode&quot;: &quot;gdb&quot;,
+            &quot;miDebuggerPath&quot;: &quot;C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/gdb.exe&quot;,
+            &quot;preLaunchTask&quot;: &quot;g++&quot;,
+            &quot;setupCommands&quot;: [
+                &#123;
+                    &quot;description&quot;: &quot;Enable pretty-printing for gdb&quot;,
+                    &quot;text&quot;: &quot;-enable-pretty-printing&quot;,
+                    &quot;ignoreFailures&quot;: true
+                &#125;
+            ]
+        &#125;,
+    ]
+&#125;
+</code></pre>
+<p>tasks.json    修改 “-I” 和 “-L” 的路径。   ”-l“的路径去-L底下找自己下载的版本号</p>
+<pre><code class="json">&#123;
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    &quot;version&quot;: &quot;2.0.0&quot;,
+   // &quot;label&quot;: &quot;g++&quot;,
+    &quot;command&quot;: &quot;g++&quot;,
+    &quot;args&quot;: [
+        &quot;-g&quot;, 
+        &quot;-std=c++11&quot;, 
+        &quot;$&#123;file&#125;&quot;, 
+        &quot;-o&quot;, 
+        &quot;$&#123;fileBasenameNoExtension&#125;.o&quot;,  
+        &quot;-I&quot;, &quot;C:\\Users\\19735\\Documents\\opencv\\opencv\\build\\include&quot;,
+        &quot;-I&quot;, &quot;C:\\Users\\19735\\Documents\\opencv\\opencv\\build\\include\\opencv2&quot;,
+        &quot;-I&quot;, &quot;C:/Users/19735/Documents/opencv/opencv/build/include/opencv2&quot;,
+        &quot;-I&quot;, &quot;C:\\Users\\19735\\Documents\\opencv\\opencv\\build\\include\\opencv&quot;,
+        &quot;-L&quot;, &quot;C:\\Users\\19735\\Documents\\opencv\\opencv\\build\\x64\\MinGW\\lib&quot;,
+        &quot;-l&quot;, &quot;opencv_core341&quot;,
+        &quot;-l&quot;, &quot;opencv_imgproc341&quot;,
+        &quot;-l&quot;, &quot;opencv_imgcodecs341&quot;,
+        &quot;-l&quot;, &quot;opencv_video341&quot;,
+        &quot;-l&quot;, &quot;opencv_ml341&quot;,
+        &quot;-l&quot;, &quot;opencv_highgui341&quot;,
+        &quot;-l&quot;, &quot;opencv_objdetect341&quot;,
+        &quot;-l&quot;, &quot;opencv_flann341&quot;,
+        &quot;-l&quot;, &quot;opencv_imgcodecs341&quot;,
+        &quot;-l&quot;, &quot;opencv_photo341&quot;,
+        &quot;-l&quot;, &quot;opencv_videoio341&quot;
+  
+    ],// 编译命令参数
+    &quot;problemMatcher&quot;:&#123;
+        &quot;owner&quot;: &quot;cpp&quot;,
+        &quot;fileLocation&quot;:[
+            &quot;relative&quot;,
+            &quot;$&#123;workspaceFolder&#125;&quot;
+        ],
+        &quot;pattern&quot;:[
+            &#123;
+                &quot;regexp&quot;: &quot;^([^\\\\s].*)\\\\((\\\\d+,\\\\d+)\\\\):\\\\s*(.*)$&quot;,
+                &quot;file&quot;: 1,
+                &quot;location&quot;: 2,
+                &quot;message&quot;: 3
+            &#125;
+        ]
+    &#125;,
+    &quot;group&quot;: &#123;
+        &quot;kind&quot;: &quot;build&quot;,
+        &quot;isDefault&quot;: true
+    &#125;
+  &#125;
+</code></pre>
+<p>新建一个c_cpp_properties.json   <code>includePath</code>的路径为自己的，<code>compilerPath</code> 同理。</p>
+<pre><code class="json">&#123;
+    &quot;configurations&quot;: [
+        &#123;
+            &quot;name&quot;: &quot;win&quot;,
+            &quot;includePath&quot;: [
+                &quot;$&#123;workspaceFolder&#125;/**&quot;,
+                &quot;C:/Users/19735/Documents/opencv/opencv/build/include/opencv2&quot;,
+                &quot;C:\\Users\\19735\\Documents\\opencv\\opencv\\build\\include&quot;,
+                &quot;C:\\Users\\19735\\Documents\\opencv\\opencv\\build\\include\\opencv2&quot;,
+                &quot;C:\\Users\\19735\\Documents\\opencv\\opencv\\build\\include\\opencv&quot;                
+            ],
+            &quot;defines&quot;: [],
+            &quot;compilerPath&quot;: &quot;C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/gdb.exe&quot;,
+            &quot;cStandard&quot;: &quot;c11&quot;,
+            &quot;cppStandard&quot;: &quot;c++17&quot;,
+            &quot;intelliSenseMode&quot;: &quot;clang-x64&quot;
+        &#125;
+    ],
+    &quot;version&quot;: 4
+&#125;
+</code></pre>
+</div><div class="p-copyright"><blockquote><div class="p-copyright-author"><span class="p-copyright-key">帅哥请Q我：</span><span class="p-copytight-value"><a href="mailto:1973511931@qq.com">做秧歌star的钢琴</a></span></div><div class="p-copyright-link"><span class="p-copyright-key">这里是链接：</span><span class="p-copytight-value"><a href="/blog/2021/05/08/%E9%85%8D%E7%BD%AEwindows%E4%B8%8B%E7%9A%84vscode%E7%9A%84opencv/">https://huatingzhihoudahao.github.io/blog/2021/05/08/配置windows下的vscode的opencv/</a></span></div><div class="p-copyright-note"><span class="p-copyright-key">版权声明：</span><span class="p-copytight-value">本博客所有文章除特殊声明外，均采用<a rel="nofollow" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/"> CC BY-NC 4.0 </a>许可协议。转载请注明出处 <a href="https://huatingzhihoudahao.github.io/blog">做秧歌star的钢琴</a> </span></div></blockquote></div></article><div class="p-info box"><span class="p-tags"><i class="fa fa-tag"></i><a href="/blog/tags/opencv%E9%85%8D%E7%BD%AE/">opencv配置</a></span></div><aside id="toc"><div class="toc-title">目录</div><nav><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEMINGW"><span class="toc-number">1.</span> <span class="toc-text">配置MINGW</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEcmake"><span class="toc-number">2.</span> <span class="toc-text">配置cmake</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BA%E7%8E%B0error-invalid-register-for-seh-savexmm"><span class="toc-number">3.</span> <span class="toc-text">出现error  invalid register for .seh_savexmm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE"><span class="toc-number">4.</span> <span class="toc-text">项目配置</span></a></li></ol></nav></aside></div><section class="p-ext"><div class="l-pager l-pager-dtl box"><a class="prev" href="/blog/2021/05/08/opencv%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/">&lt; ros下opencv基础操作</a><a class="next" href="/blog/2021/05/07/ros%E4%B8%BB%E4%BB%8E%E6%9C%BA%E9%85%8D%E7%BD%AE/">ros主从机配置 &gt;</a></div><div id="valine-comment"><style type="text/css">.night .v[data-class=v] a { color: #0F9FB4 !important; }
+.night .v[data-class=v] a:hover { color: #216C73 !important; }
+.night .v[data-class=v] li { list-style: inherit; }
+.night .v[data-class=v] .vwrap { border: 1px solid #223441; border-radius: 0; }
+.night .v[data-class=v] .vwrap:hover { box-shadow: 0 0 6px 1px #223441; }
+.night .v[data-class=v] .vbtn { border-radius: 0; background: none; }
+.night .v[data-class=v] .vlist .vcard .vh { border-bottom-color: #293D4E; }
+.night .v[data-class=v] .vwrap .vheader .vinput { border-bottom-color: #223441; }
+.night .v[data-class=v] .vwrap .vheader .vinput:focus { border-bottom-color: #339EB4; }
+.night .v[data-class=v] code, .night .v[data-class=v] pre,.night .v[data-class=v] .vlist .vcard .vhead .vsys { background: #203240 !important; }
+.night .v[data-class=v] code, .night .v[data-class=v] pre { color: #F0F0F0; font-size: 95%; }
+.v[data-class=v] .vcards .vcard .vh {border-bottom-color: #223441; }
+.night .v[data-class=v] .vcards .vcard .vcontent.expand:before {background: linear-gradient(180deg,rgba(38,57,73,.4),rgba(38,57,73,.9));}
+.night .v[data-class=v] .vcards .vcard .vcontent.expand:after {background: rgba(38,57,73,.9)}
+</style><div id="vcomment"></div><script src="//cdn.bootcdn.net/ajax/libs/valine/1.4.14/Valine.min.js"></script><script>var notify = 'false' == true ? true : false;
+var verify = 'false' == true ? true : false;
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  appId:'',
+  appKey:'',
+  lang: 'zh-cn',
+  placeholder:'ヾﾉ≧∀≦)o Come on, say something...',
+  avatar:'identicon',
+  guest_info:guest_info,
+  pageSize:'10'
+})</script></div></section><footer><p>Copyright © 2016 - 2021 <a href="/blog/." rel="nofollow">我要做秧歌star的钢琴！</a> | <strong><a rel="nofollow" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a></strong><br><span id="busuanzi_container_site_uv"><i class="fa fa-user"></i><span id="busuanzi_value_site_uv"></span></span> <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i><span id="busuanzi_value_site_pv"></span></span> | Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a>Theme with<a rel="nofollow" target="_blank" href="https://github.com/litreily/snark-hexo"> snark.</a></p></footer></div></div></div><script type="text/javascript" src="/blog/js/search.js"></script><script type="text/javascript" src="/blog/js/top.js"></script><script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+    search_path = 'search.xml';
+}
+var path = '/blog/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script><script type="text/javascript" src="/blog/js/fancybox.js?v=0.0.1" async></script></body></html>
