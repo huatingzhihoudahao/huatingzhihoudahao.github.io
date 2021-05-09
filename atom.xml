@@ -6,7 +6,7 @@
   <link href="https://huatingzhihoudahao.github.io/blog/atom.xml" rel="self"/>
   
   <link href="https://huatingzhihoudahao.github.io/blog/"/>
-  <updated>2021-05-08T07:53:16.070Z</updated>
+  <updated>2021-05-09T14:00:04.579Z</updated>
   <id>https://huatingzhihoudahao.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>stm32_uart卡在等待发送移位寄存器为空</title>
+    <link href="https://huatingzhihoudahao.github.io/blog/2021/05/09/stm32-uart%E5%8D%A1%E5%9C%A8%E7%AD%89%E5%BE%85%E5%8F%91%E9%80%81%E7%A7%BB%E4%BD%8D%E5%AF%84%E5%AD%98%E5%99%A8%E4%B8%BA%E7%A9%BA/"/>
+    <id>https://huatingzhihoudahao.github.io/blog/2021/05/09/stm32-uart%E5%8D%A1%E5%9C%A8%E7%AD%89%E5%BE%85%E5%8F%91%E9%80%81%E7%A7%BB%E4%BD%8D%E5%AF%84%E5%AD%98%E5%99%A8%E4%B8%BA%E7%A9%BA/</id>
+    <published>2021-05-09T13:45:39.000Z</published>
+    <updated>2021-05-09T14:00:04.579Z</updated>
+    
+    <content type="html"><![CDATA[<p>整理文件发现了当时用32的uart时候的这个随手笔记</p><p>用的是F750z8t6，贴一下。。其实可读性很差基本上只有当初自己知道自己在说啥。。。以后再遇到了来翻一下。。</p><h3 id="板载资源"><a href="#板载资源" class="headerlink" title="板载资源"></a>板载资源</h3><p>三个usart  通用同步异步<br>俩uart 异步</p><h3 id="串口时钟使能"><a href="#串口时钟使能" class="headerlink" title="串口时钟使能"></a>串口时钟使能</h3><p>串口是挂载在 APB2 下面的外设，所以使能函数为：</p><pre><code>RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1)；</code></pre><h3 id="串口复位"><a href="#串口复位" class="headerlink" title="串口复位"></a>串口复位</h3><p>当外设出现异常的时候可以通过复位设置，实现该外设的复位，然后重新配置这个外设达到让其重新工作的目的。一般在系统刚开始配置外设的时候，都会先执行复位该外设的操作。 复位的是在函数 USART_DeInit()中完成：</p><pre><code>void USART_DeInit(USART_TypeDef* USARTx);//串口复位</code></pre><h3 id="串口参数初始化"><a href="#串口参数初始化" class="headerlink" title="串口参数初始化"></a>串口参数初始化</h3><p>串口初始化是通过 USART_Init()函数实现的，</p><pre><code>void USART_Init(USART_TypeDef* USARTx, USART_InitTypeDef* USART_InitStruct)；</code></pre><h3 id="数据发送与接收"><a href="#数据发送与接收" class="headerlink" title="数据发送与接收"></a>数据发送与接收</h3><p> STM32 的发送与接收是通过数据寄存器 USART_DR 来实现的，这是一个双寄存器，（低八位有效，他位保留）包含了 TDR 和 RDR(一条总线出来 地址一样  但是其实有俩，移位寄存器也是有俩  ，这种设计是为了防止全双工通信的时候对发导致冲突)。当向该寄存器写数据的时候，串口就会立刻自动发送，不会保存下来，当收到数据的时候，也是存在该寄存器内。</p><p>STM32 库函数操作 USART_DR 寄存器发送数据的函数是：</p><pre><code>void USART_SendData(USART_TypeDef* USARTx, uint16_t Data);</code></pre><p>通过该函数向串口寄存器 USART_DR 写入一个数据。</p><p>STM32 库函数操作 USART_DR 寄存器读取串口接收到的数据的函数是：</p><pre><code>uint16_t USART_ReceiveData(USART_TypeDef* USARTx);</code></pre><h3 id="串口状态"><a href="#串口状态" class="headerlink" title="串口状态"></a>串口状态</h3><p>串口的状态可以通过状态寄存器 USART_SR 读取。USART_SR 的各位描述见数据手册</p><p>这里我们关注一下两个位，第 5、 6 位 RXNE 和 TC。</p><p>RXNE（读数据寄存器非空），当该位被置 1 的时候，就是提示已经有数据被接收到了，并且可以读出来了。这时候我们要做的就是尽快去读取 USART_DR，通过读 USART_DR 可以将该位清零，也可以向该位写 0，直接清除。</p><p>TC（发送完成），当该位被置位的时候，表示 USART_DR 内的数据已经被发送完成了。如果设置了这个位的中断，则会产生中断。该位也有两种清零方式： 1）读 USART_SR，写USART_DR。 2）直接向该位写 0。</p><p>在我们固件库函数里面，读取串口状态的函数是：</p><pre><code>FlagStatus USART_GetFlagStatus(USART_TypeDef* USARTx, uint16_t USART_FLAG)；</code></pre><p>这个函数的第二个入口参数非常关键， 它是标示我们要查看串口的哪种状态， 比如上面讲解的RXNE(读数据寄存器非空)以及 TC(发送完成)。例如我们要判断读寄存器是否非空(RXNE)， 操作库函数的方法是：</p><pre><code>USART_GetFlagStatus(USART1, USART_FLAG_RXNE);</code></pre><p>我们要判断发送是否完成(TC)，操作库函数的方法是：</p><pre><code>USART_GetFlagStatus(USART1, USART_FLAG_TC);</code></pre><p>这些标识号在 MDK 里面是通过宏定义定义的：</p><p>#define USART_IT_PE ((uint16_t)0x0028)<br>#define USART_IT_TXE ((uint16_t)0x0727)<br>#define USART_IT_TC ((uint16_t)0x0626)<br>#define USART_IT_RXNE ((uint16_t)0x0525)<br>#define USART_IT_IDLE ((uint16_t)0x0424)<br>#define USART_IT_LBD ((uint16_t)0x0846)<br>#define USART_IT_CTS ((uint16_t)0x096A)<br>#define USART_IT_ERR ((uint16_t)0x0060)<br>#define USART_IT_ORE ((uint16_t)0x0360)<br>#define USART_IT_NE ((uint16_t)0x0260)<br>#define USART_IT_FE ((uint16_t)0x0160)</p><h3 id="串口使能"><a href="#串口使能" class="headerlink" title="串口使能"></a>串口使能</h3><p> 串口使能是通过函数 USART_Cmd()来实现的，这个使用方法是：</p><pre><code>USART_Cmd(USART1, ENABLE); //使能串口</code></pre><h3 id="开启串口响应中断"><a href="#开启串口响应中断" class="headerlink" title="开启串口响应中断"></a>开启串口响应中断</h3><p> 有些时候当我们还需要开启串口中断，那么我们还需要使能串口中断，使能串口中断的函数是：</p><pre><code>void USART_ITConfig(USART_TypeDef* USARTx, uint16_t USART_IT,FunctionalState NewState)</code></pre><p>这个函数的第二个入口参数是标示使能串口的类型， 也就是使能哪种中断， 因为串口的中断类型有很多种。<br>比如在接收到数据的时候（RXNE 读数据寄存器非空），我们要产生中断，那么我们开启中断的方法是：</p><pre><code>USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);//开启中断，接收到数据中断</code></pre><p>我们在发送数据结束的时候（TC， 发送完成） 要产生中断，那么方法是：</p><pre><code>USART_ITConfig(USART1， USART_IT_TC， ENABLE);</code></pre><h3 id="获取相应中断状态"><a href="#获取相应中断状态" class="headerlink" title="获取相应中断状态"></a>获取相应中断状态</h3><p> 当我们使能了某个中断的时候，当该中断发生了，就会设置状态寄存器中的某个标志位。<br>经常我们在中断处理函数中，要判断该中断是哪种中断，使用的函数是：</p><pre><code>ITStatus USART_GetITStatus(USART_TypeDef* USARTx, uint16_t USART_IT)</code></pre><p>比如我们使能了串口发送完成中断，那么当中断发生了， 我们便可以在中断处理函数中调用这个函数来判断到底是否是串口发送完成中断，方法是：</p><pre><code>USART_GetITStatus(USART1, USART_IT_TC)</code></pre><p>返回值是 SET，说明是串口发送完成中断发生。</p><p>if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)<br>//如果串口接收中断返回不是RESET（0），即返回的是SET(1)，即接收中断发生</p><h3 id="卡在等待发送移位寄存器为空"><a href="#卡在等待发送移位寄存器为空" class="headerlink" title="卡在等待发送移位寄存器为空"></a>卡在等待发送移位寄存器为空</h3><p>在USART的发送端有2个寄存器，<br>一个是程序可以看到的USART_DR寄存器,<br>另一个是程序看不到的移位寄存器,对应USART数据发送有两个标志，<br>一个是TXE=发送数据寄存器空，另一个是TC=发送结束。<br>当USART_DR中的数据传送到移位寄存器后，TXE被设置，此时移位寄存器开始向TX信号线按位传输数据，但因为TDR已经变空，程序可以把下一个要发送的字节(操作USART_DR)写入TDR中，而不必等到移位寄存器中所有位发送结束，所有位发送结束时(送出停止位后)硬件会设置TC标志。　　<br>另一方面，在刚刚初始化好USART还没有发送任何数据时，也会有TXE标志，因为这时发送数据寄存器是空的！！！！！如果把TXE中断打开就会进入收发中断的！！</p><p>TXEIE和TCIE的意义很简单，TXEIE允许在TXE标志为’1’时产生中断，而TCIE允许在TC标志为’1’时产生中断。　<br>　至于什么时候使用哪个标志，需要根据你的需要自己决定。但我认为TXE允许程序有更充裕的时间填写TDR寄存器，保证发送的数据流不间断。TC可以让程序知道发送结束的确切时间，有利于程序控制外部数据流的时序。<br>先说TC。即Transmission Complete。发送一个字节后才进入中断，这里称为“发送后中断”。</p><p>关于我开了TC的中断之后他一直进入中断  我们 软件清了TC标志位<br>        if(USART_GetITStatus(USART1, USART_IT_TC) != RESET)<br>         USART_ClearITPendingBit(USART1, USART_IT_TC);<br>或者可以通过读SR 即if(USART_GetflagStatus(USART1, USART_FLAG_TC ) != RESET)<br>（草！！！！我们这么写了但是还是没有不行！！ITTC和FLAGTC一直被置位！无奈之下只能手动清了）<br>CR1那个寄存器全是中断的  if(USART_GetITStatus(USART1, USART_IT_TC) != RESET)     </p><p>但是我们想清除TC中断得读SR   或者写DR</p><p>想接受的标志位RXNE  需要读DR  在我们读取数据的时候就干过这是 就已经清0了</p><p>TC（发送完成完成完成！），当该位被置位的时候，表示 USART_DR 内的数据已经被发送完成了。如 果设置了这个位的中断，则会产生中断。该位也有两种清零方式：1）读 USART_SR，写 USART_DR。2）直接向该位写 0。 </p><p>RXNE（读数据寄存器非空），当该位被置 1 的时候，就是提示已经有数据被接收到了，并 且可以读出来了。这时候我们要做的就是尽快去读取 USART_DR，通过读 USART_DR 可以将 该位清零，也可以向该位写 0，直接清除。</p><p>今天遇到的是</p><pre><code>void Usart_SendString( USART_TypeDef * pUSARTx, char *str)  &#123;  unsigned int k=0;       do &#123;              Usart_SendByte( pUSARTx, *(str + k) );              k++;        &#125; while (*(str + k)!=&#39;\0&#39;);         /* 等待发送移位寄存器为空 */          while (USART_GetFlagStatus(pUSARTx,USART_FLAG_TC)==RESET)              &#123;          &#125; &#125;</code></pre><p>卡在等待发送移位寄存器为空，因为<br>      void USART1_IRQHandler(void)<br>      //    如果TC发送中断被触发，即发送完成<br>      if(USART_GetITStatus(USART1, USART_IT_TC) != RESET)<br>      USART_ClearITPendingBit(USART1, USART_IT_TC);<br>在这里只要发完，SR的TC置1，中断触发，我就手动清了SR相应的地方，使得TC复位。<br>于是卡在了/* 等待发送移位寄存器为空 */<br> while (USART_GetFlagStatus(pUSARTx,USART_FLAG_TC)==RESET) </p><p>所以就注释掉init的//  USART_ITConfig(USART1, USART_IT_TC, ENABLE);//开启串口发送中断<br>以及注释掉//        如果TC发送中断被触发，即发送完成<br>//       if(USART_GetITStatus(USART1, USART_IT_TC) != RESET)<br>//       USART_ClearITPendingBit(USART1, USART_IT_TC);</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;整理文件发现了当时用32的uart时候的这个随手笔记&lt;/p&gt;
+&lt;p&gt;用的是F750z8t6，贴一下。。其实可读性很差基本上只有当初自己知道自己在说啥。。。以后再遇到了来翻一下。。&lt;/p&gt;
+&lt;h3 id=&quot;板载资源&quot;&gt;&lt;a href=&quot;#板载资源&quot; class=&quot;header</summary>
+      
+    
+    
+    
+    <category term="嵌入式" scheme="https://huatingzhihoudahao.github.io/blog/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/"/>
+    
+    
+    <category term="stm32" scheme="https://huatingzhihoudahao.github.io/blog/tags/stm32/"/>
+    
+    <category term="uart" scheme="https://huatingzhihoudahao.github.io/blog/tags/uart/"/>
+    
+  </entry>
   
   <entry>
     <title>用python替换图片的背景颜色</title>
