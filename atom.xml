@@ -6,7 +6,7 @@
   <link href="https://huatingzhihoudahao.github.io/blog/atom.xml" rel="self"/>
   
   <link href="https://huatingzhihoudahao.github.io/blog/"/>
-  <updated>2021-05-10T14:08:34.209Z</updated>
+  <updated>2021-05-28T13:08:09.824Z</updated>
   <id>https://huatingzhihoudahao.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>minimum_snap</title>
+    <link href="https://huatingzhihoudahao.github.io/blog/2021/05/28/minimum-snap/"/>
+    <id>https://huatingzhihoudahao.github.io/blog/2021/05/28/minimum-snap/</id>
+    <published>2021-05-28T13:03:51.000Z</published>
+    <updated>2021-05-28T13:08:09.824Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="单段轨迹"><a href="#单段轨迹" class="headerlink" title="单段轨迹"></a>单段轨迹</h3><h4 id="BVP"><a href="#BVP" class="headerlink" title="BVP"></a>BVP</h4><h4 id="OBVP"><a href="#OBVP" class="headerlink" title="OBVP"></a>OBVP</h4><h3 id="多段轨迹"><a href="#多段轨迹" class="headerlink" title="多段轨迹"></a>多段轨迹</h3><h4 id="建模"><a href="#建模" class="headerlink" title="建模"></a>建模</h4>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;单段轨迹&quot;&gt;&lt;a href=&quot;#单段轨迹&quot; class=&quot;headerlink&quot; title=&quot;单段轨迹&quot;&gt;&lt;/a&gt;单段轨迹&lt;/h3&gt;&lt;h4 id=&quot;BVP&quot;&gt;&lt;a href=&quot;#BVP&quot; class=&quot;headerlink&quot; title=&quot;BVP&quot;&gt;&lt;/a&gt;BV</summary>
+      
+    
+    
+    
+    <category term="motion planning" scheme="https://huatingzhihoudahao.github.io/blog/categories/motion-planning/"/>
+    
+    
+    <category term="运动规划" scheme="https://huatingzhihoudahao.github.io/blog/tags/%E8%BF%90%E5%8A%A8%E8%A7%84%E5%88%92/"/>
+    
+  </entry>
   
   <entry>
     <title>stm32_uart卡在等待发送移位寄存器为空</title>
